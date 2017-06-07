@@ -5,17 +5,33 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
 	public Animation anim;
+	GroundTilesLine line;
 
-	void Start () {
-		
-	}	
-	void AnimateIn()
+	public void Init(GroundTilesLine line)
+	{
+		this.line = line;
+	}
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Border") {
+			line.DestroyLine ();
+			Events.OnAddNewLine ();
+			GetComponent<BoxCollider> ().enabled = false;
+		}
+	}
+	public void AnimateIn()
 	{
 		anim.Play ("in");
 	}
-	void AnimateOut()
+	public void AnimateOut()
 	{
+		Invoke ("Reset", 0.2f);
 		anim.Play ("out");
 	}
+	void Reset()
+	{
+		Destroy (line.gameObject);
+	}
+
 
 }

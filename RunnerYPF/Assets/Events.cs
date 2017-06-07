@@ -5,5 +5,5 @@ using System.Collections.Generic;
 public static class Events {
 
 	public static System.Action CreatorReset = delegate { };
-
+	public static System.Action OnAddNewLine = delegate { };
 }
