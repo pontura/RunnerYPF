@@ -12,8 +12,7 @@ public class GroundTilesLine : MonoBehaviour {
 		IDLE,
 		ENDING
 	}
-	public Tile tile;
-	public Tile tileGeneric;
+
 	private int totalTiles = 8;
 
 	void Start () {
@@ -30,13 +29,11 @@ public class GroundTilesLine : MonoBehaviour {
 		Tile newTile;
 
 		if(_x != 1)
-			newTile= Instantiate (tileGeneric);
+			newTile = Data.Instance.pool.AddObjectTo ("TileGeneric", transform).GetComponent<Tile>();
 		else
-			newTile= Instantiate (tile);
+			newTile = Data.Instance.pool.AddObjectTo ("Tile", transform).GetComponent<Tile>();
 
 		tiles.Add (newTile);
-		
-		newTile.transform.SetParent (transform);
 		newTile.transform.localPosition = new Vector3 (_x, 0, 0);
 		newTile.Init (this);
 
@@ -46,6 +43,7 @@ public class GroundTilesLine : MonoBehaviour {
 	{
 		foreach (Tile tile in tiles)
 			tile.AnimateOut ();
+		Destroy (this);
 	}
 
 }

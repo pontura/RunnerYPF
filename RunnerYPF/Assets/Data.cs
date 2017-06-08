@@ -15,6 +15,7 @@ public class Data : MonoBehaviour
 
     const string PREFAB_PATH = "Data";    
     static Data mInstance = null;
+	public Pool pool;
 
     public static Data Instance
     {
@@ -52,6 +53,8 @@ public class Data : MonoBehaviour
         }
        
         DontDestroyOnLoad(this.gameObject);
+
+		pool = GetComponent<Pool> ();
     }
 
 }
