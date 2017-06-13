@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	public CharacterAsset asset;
+	public CharacterAsset characterToInstantiate;
 	private Rigidbody rb;
 	private int jumpForce = 5000;
 	public states state;
@@ -13,24 +13,36 @@ public class Character : MonoBehaviour {
 		IDLE,
 		RUNNING,
 		STARTJUMPING,
-		JUMPING
+		JUMPING,
+		DEAD
 	}
-
+	CharacterAsset asset;
 	void Start () {
 		Events.Jump += Jump;
 		Events.SpeedChange += SpeedChange;
-
-		CharacterAsset newAsset = Instantiate (asset);
-		newAsset.transform.SetParent (transform);
-		newAsset.transform.localPosition = new Vector3 (1, 5, 0);
-
-		rb = newAsset.rigidBody;
-		newAsset.Init (this);
-
+		Events.Restart += Restart;
+		asset = Instantiate (characterToInstantiate);
+		asset.transform.SetParent (transform);
+		Restart ();
+	}
+	float liveSince;
+	void Restart()
+	{
+		liveSince = 0;
+		state = states.IDLE;
+		asset.transform.localPosition = new Vector3 (1, 4, 0);
+		rb = asset.rigidBody;
+		rb.velocity = Vector3.zero;
+		asset.Init (this);
 		state = states.RUNNING;
+	}
+	void OnDestroy () {
+		Events.Jump -= Jump;
+		Events.SpeedChange -= SpeedChange;
 	}
 	public void UpdateZPosition(float _z)
 	{
+		liveSince += Time.deltaTime;
 		Vector3 pos = transform.localPosition;
 		pos.z = _z-4;
 		transform.localPosition = pos;
@@ -63,5 +75,13 @@ public class Character : MonoBehaviour {
 	}
 	void SpeedChange (int multiplier) {
 		
+	}
+	public void HitWithObstacle()
+	{
+		if (liveSince < 1)
+			return;
+		print ("liveSince " + liveSince);
+		state = states.DEAD;
+		Events.OnCharacterDie ();
 	}
 }

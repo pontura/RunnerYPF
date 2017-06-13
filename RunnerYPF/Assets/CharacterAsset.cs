@@ -17,7 +17,8 @@ public class CharacterAsset : MonoBehaviour {
 			return;
 		
 		if (other.gameObject.tag == "Tile" && character.state != Character.states.STARTJUMPING) {
-			character.OnFloor ();
+			if(!other.gameObject.GetComponent<TileAsset>().isHole)
+				character.OnFloor ();
 		}
 	}
 	public void Jump()

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class Pool : MonoBehaviour
 {
-
 	#region member
 	[Serializable]
 	public class ObjectPoolEntry
@@ -20,12 +19,14 @@ public class Pool : MonoBehaviour
 	public ObjectPoolEntry[] Entries;
 	public Transform pooled;
 
-	public List<SceneObject>[] pooledObjects;
+	public List<SceneObject> pooledObjects;
+	public List<SceneObject> ObjectsOnScene;
 
 	private int totalEntries;
 
-	void Start()
+	void Awake()
 	{
+		Events.PoolAllObjects += PoolAllObjects;
 		DontDestroyOnLoad(this);
 
 		for (int i = 0; i < Entries.Length; i++)
@@ -33,15 +34,11 @@ public class Pool : MonoBehaviour
 			totalEntries += Entries[i].Count;
 		}
 
-		pooledObjects = new List<SceneObject>[totalEntries];
-
 		int id = 0;
 		for (int i = 0; i < Entries.Length; i++)
 		{
 			var objectPrefab = Entries[i];
 			//create the repository
-
-			pooledObjects[i] = new List<SceneObject>();
 			//fill it
 
 			for (int n = 0; n < objectPrefab.Count; n++)
@@ -49,8 +46,10 @@ public class Pool : MonoBehaviour
 				SceneObject newObj = Instantiate(objectPrefab.Prefab) as SceneObject;
 				newObj.name = objectPrefab.Prefab.name;
 				newObj.transform.SetParent (pooled);
-				SceneObject ro = newObj.GetComponent<SceneObject>();
-				PoolObject(ro);
+				newObj.gameObject.SetActive (false);
+				pooledObjects.Add (newObj);
+				//SceneObject ro = newObj.GetComponent<SceneObject>();
+				//PoolObject(ro);
 				id++;
 
 			}
@@ -59,51 +58,60 @@ public class Pool : MonoBehaviour
 
 	public SceneObject AddObjectTo(string objectType, Transform container)
 	{
-		for (int i = 0; i < Entries.Length; i++)
-		{
-			var prefab = Entries[i].Prefab;
-			if (prefab.name != objectType)
-				continue;
 
-			if (pooledObjects[i].Count > 0)
-			{
-				SceneObject pooledObject = pooledObjects[i][0];
-				pooledObjects[i].RemoveAt(0);
-				if (pooledObject)
-				{
-					pooledObject.transform.SetParent (container);
-					pooledObject.transform.SetParent (container);
-					pooledObject.transform.localPosition = Vector3.zero;
-					pooledObject.transform.localScale = Vector3.one;
-					pooledObject.gameObject.SetActive (true);
-					return pooledObject;
-				}
-				else
-				{
-					Debug.Log("ObjectPool no encontro el objeto: " + objectType + "  bool ");
-					AddObjectTo(objectType, container);
-				}
-			}
+		SceneObject pooledObjectToAdd = null;
+		foreach (SceneObject pooledObject in pooledObjects) {
+			if (pooledObject.name == objectType)
+				pooledObjectToAdd = pooledObject;
+		}
+		if (pooledObjectToAdd != null)
+		{
+			
+			pooledObjectToAdd.transform.SetParent (container);
+			pooledObjectToAdd.transform.localPosition = Vector3.zero;
+			pooledObjectToAdd.transform.localScale = Vector3.one;
+			pooledObjectToAdd.gameObject.SetActive (true);
+
+			ObjectsOnScene.Add (pooledObjectToAdd);
+			pooledObjects.Remove (pooledObjectToAdd);
+
+			return pooledObjectToAdd;
+		}
+		else
+		{
+			Debug.Log("ObjectPool no encontro el objeto: " + objectType + "  bool ");
 		}
 		return null;
 	}
 
 
 
-
+	void PoolAllObjects()
+	{
+		for (int a=0; a<ObjectsOnScene.Count; a++) {
+			SceneObject so = ObjectsOnScene[a];
+			PoolthisObject (so);
+		}
+		ObjectsOnScene.Clear ();
+	}
 	public void PoolObject(SceneObject obj)
 	{
-		for (int i = 0; i < Entries.Length; i++)
-		{
-			if (Entries[i].Prefab.name == obj.name || Entries[i].Prefab.name + "(Clone)" == obj.name)
-			{
-				obj.gameObject.SetActive(false);
-				obj.transform.SetParent (pooled);
-				pooledObjects[i].Add(obj);
-				return;
-			}
+		SceneObject objectToPool = null;
+		foreach (SceneObject ooscene in ObjectsOnScene) {
+			if (ooscene == obj)
+				objectToPool = ooscene;
+		}
+		if (objectToPool != null) {
+			PoolthisObject (objectToPool);
+			ObjectsOnScene.Remove (objectToPool);
 		}
 	}
-
+	void PoolthisObject(SceneObject so)
+	{
+		so.gameObject.SetActive (false);
+		so.transform.SetParent (pooled);
+		so.transform.position = new Vector3 (0, 0, 0);
+		pooledObjects.Add (so);
+	}
 
 }

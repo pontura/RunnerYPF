@@ -16,13 +16,27 @@ public class GameManager : MonoBehaviour {
 
 	public enum states
 	{
-		
 		PLAYING,
-		READY
+		READY,
+		DEAD
 	}
 	void Start () {
 		Events.SpeedChange += SpeedChange;
+		Events.OnCharacterDie += OnCharacterDie;
+		Events.Restart += Restart;
 		realSpeed = speed;
+	}
+	void OnDestroy () {
+		Events.SpeedChange -= SpeedChange;
+		Events.OnCharacterDie -= OnCharacterDie;
+		Events.Restart -= Restart;
+	}
+	void Restart()
+	{
+		state = states.PLAYING;
+		Vector3 pos = camera.transform.localPosition;
+		pos.z = 4.5f;		
+		camera.transform.localPosition = pos;
 	}
 	void SpeedChange(int multiplier)
 	{
@@ -44,5 +58,17 @@ public class GameManager : MonoBehaviour {
 		distance = pos.z;			
 		camera.transform.localPosition = pos;
 		character.UpdateZPosition (pos.z);
+	}
+	void OnCharacterDie()
+	{
+		state = states.DEAD;
+		StartCoroutine (RestartCoroutine());
+	}
+	IEnumerator RestartCoroutine()
+	{
+		yield return new WaitForSeconds (1);
+		Events.PoolAllObjects ();
+		yield return new WaitForSeconds (2);
+		Events.Restart ();
 	}
 }

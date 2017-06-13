@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class Tile : SceneObject {
 
+	public bool isPath;
+	public TileAsset asset;
+	public TileData tileData;
 	public Animation anim;
 	GroundTilesLine line;
-	BoxCollider collider;
 	public Transform container;
 
 	public void Init(GroundTilesLine line)
 	{
-		collider = GetComponent<BoxCollider> ();
 		this.line = line;
-		if (collider != null) {
-			collider.enabled = true;
+		bool isHole = false;
+		if (isPath) {
+			int height= tileData.height;
+			if (height == 0) {
+				isHole = true;
+			}
+			else {
+				asset.gameObject.SetActive (true);
+				asset.transform.localPosition = new Vector3 (0, height-1, 0);
+			}
 		} else {
-			if (Random.Range (0, 100) < 50) {
+			if (Random.Range (0, 100) < 10) {
 				SceneObject so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
 			}
 		}
+		asset.Init (this, isHole);
 	}
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.tag == "Border") {
-			line.DestroyLine ();
-			Events.OnAddNewLine ();
-			collider.enabled = false;
-		}
-	}
+
 	public void AnimateIn()
 	{
 		anim.Play ("in");
@@ -38,14 +41,16 @@ public class Tile : SceneObject {
 		Invoke ("Reset", 0.2f);
 		anim.Play ("out");
 	}
-	void Reset()
+	public void Reset()
 	{
-		if(collider != null)
-			collider.enabled = false;
-		Data.Instance.pool.PoolObject (this);
+		if(asset.GetComponent<Collider>() != null)
+			asset.GetComponent<Collider>().enabled = false;
+		
+		Poolme ();
+
 		if (container != null && container.childCount > 0) {
 			SceneObject so = container.GetComponentInChildren<SceneObject> ();
-			Data.Instance.pool.PoolObject (so);
+			so.Poolme();
 		}
 	}
 

@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class SceneObject : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
-		
+		//Events.PoolAllObjects += PoolAllObjects;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	void OnDestroy() {
+	//	Events.PoolAllObjects -= PoolAllObjects;
+	}
+	void PoolAllObjects()
+	{
+		//Poolme ();
+	}
+	public void Poolme()
+	{
+		Data.Instance.pool.PoolObject (this);
 	}
 }

@@ -10,7 +10,12 @@ public class GroundManager : MonoBehaviour {
 
 	void Start () {
 		Events.OnAddNewLine += OnAddNewLine;
-
+		Events.Restart += Restart;
+		Restart ();
+	}
+	void Restart()
+	{
+		z = 0;
 		for (int a = 0; a < 10; a++) {
 			AddTileLine (a);
 		}

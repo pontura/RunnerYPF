@@ -16,8 +16,16 @@ public class GroundTilesLine : MonoBehaviour {
 	private int totalTiles = 8;
 
 	void Start () {
+		state = states.STARTING;
+		Events.PoolAllObjects += PoolAllObjects;
+		if (transform == null)
+			return;
 		AddTiles ();
 	}
+	void OnDestroy () {
+		Events.PoolAllObjects -= PoolAllObjects;
+	}
+
 	public void AddTiles()
 	{
 		for (int a = 0; a < totalTiles; a++) {
@@ -28,10 +36,10 @@ public class GroundTilesLine : MonoBehaviour {
 	{
 		Tile newTile;
 
-		if(_x != 1)
-			newTile = Data.Instance.pool.AddObjectTo ("TileGeneric", transform).GetComponent<Tile>();
+		if (_x != 1)
+			newTile = AddGenericTile ();
 		else
-			newTile = Data.Instance.pool.AddObjectTo ("Tile", transform).GetComponent<Tile>();
+			newTile = AddPathTile ();
 
 		tiles.Add (newTile);
 		newTile.transform.localPosition = new Vector3 (_x, 0, 0);
@@ -39,11 +47,42 @@ public class GroundTilesLine : MonoBehaviour {
 
 		newTile.AnimateIn ();
 	}
+	Tile AddGenericTile()
+	{		
+		SceneObject so = Data.Instance.pool.AddObjectTo ("TileGeneric", transform);
+		if (so == null)
+			Debug.LogError ("A");
+		return so.GetComponent<Tile>();
+	}
+	Tile AddPathTile()
+	{
+		Tile tile = Data.Instance.pool.AddObjectTo ("Tile", transform).GetComponent<Tile>();
+		tile.tileData = Data.Instance.levelsManager.GetNextTileData();
+		return tile;
+	}
+
 	public void DestroyLine()
 	{
 		foreach (Tile tile in tiles)
 			tile.AnimateOut ();
-		Destroy (this);
+		tiles.Clear ();
 	}
-
+	void OnTriggerEnter(Collider other)
+	{				
+		if (other.tag == "Border") {
+			state = states.ENDING;
+			DestroyLine ();
+			Invoke ("Reset", 1);
+			Events.OnAddNewLine ();
+		}
+	}
+	void PoolAllObjects()
+	{
+		Invoke ("Reset", 0.2f);
+	}
+	void Reset()
+	{
+		tiles.Clear ();
+		Destroy (gameObject);
+	}
 }
