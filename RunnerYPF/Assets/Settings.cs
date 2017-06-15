@@ -30,12 +30,30 @@ public class Settings : MonoBehaviour
 	}
 	void AddLevel(JSONNode content)
 	{
-		print (content);
 		LevelData data = new LevelData();
 		data.level = int.Parse(content["level"]);
+
+		if(content ["final"] != null)
+			data.final =  true;	
+		
 		data.tiles = AddData (content ["tiles"]);	
 		data.energyAssets = AddData (content ["energ"]);	
 		levels.Add(data);
+		ShuffleListTexts (levels);
+	}
+	void ShuffleListTexts(List<LevelData> levelData)
+	{
+		if (levelData.Count < 2) return;
+		for (int a = 0; a < 200; a++)
+		{
+			int id = UnityEngine.Random.Range(1, levelData.Count);
+			LevelData value1 = levelData[0];
+			LevelData value2 = levelData[id];
+			if (value1.level == value2.level) {
+				levelData [0] = value2;
+				levelData [id] = value1;
+			}
+		}
 	}
 	int[] AddData(JSONNode data)
 	{

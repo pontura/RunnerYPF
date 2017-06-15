@@ -6,8 +6,10 @@ public class Character : MonoBehaviour {
 
 	public CharacterAsset characterToInstantiate;
 	private Rigidbody rb;
-	private int jumpForce = 5000;
+	private int jumpForce = 8000;
 	public states state;
+	private float liveSince;
+	public CharacterAsset asset;
 	public enum states
 	{
 		IDLE,
@@ -16,16 +18,21 @@ public class Character : MonoBehaviour {
 		JUMPING,
 		DEAD
 	}
-	CharacterAsset asset;
+
 	void Start () {
 		Events.Jump += Jump;
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
+		Events.RestartAllOver += Restart;
 		asset = Instantiate (characterToInstantiate);
 		asset.transform.SetParent (transform);
 		Restart ();
 	}
-	float liveSince;
+
+	void RestartAllOver()
+	{
+		Restart ();
+	}
 	void Restart()
 	{
 		liveSince = 0;
@@ -42,6 +49,9 @@ public class Character : MonoBehaviour {
 	}
 	public void UpdateZPosition(float _z)
 	{
+		if (asset.transform.position.y < 0)
+			Die ();
+		
 		liveSince += Time.deltaTime;
 		Vector3 pos = transform.localPosition;
 		pos.z = _z-4;
@@ -49,6 +59,10 @@ public class Character : MonoBehaviour {
 	}
 	int jumps = 0;
 	void Jump () {
+		
+		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
+			return;
+		
 		if (state == states.JUMPING) {
 			if(jumps > 1) return;
 		} else if (state != states.RUNNING)
@@ -74,13 +88,19 @@ public class Character : MonoBehaviour {
 		state = states.RUNNING;
 	}
 	void SpeedChange (int multiplier) {
-		
+		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
+			return;
 	}
 	public void HitWithObstacle()
 	{
 		if (liveSince < 1)
 			return;
-		print ("liveSince " + liveSince);
+		Die ();
+	}
+	void Die()
+	{
+		if (state == states.DEAD)
+			return;
 		state = states.DEAD;
 		Events.OnCharacterDie ();
 	}

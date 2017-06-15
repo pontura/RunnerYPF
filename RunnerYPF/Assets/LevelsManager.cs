@@ -11,12 +11,17 @@ public class LevelsManager : MonoBehaviour {
 	void Start ()
 	{
 		Events.Restart += Restart;
+		Events.RestartAllOver += RestartAllOver;
 		settings = GetComponent<Settings> ();
 		foreach (LevelData levelData in settings.levels) {
 			AddFreeTiles ();
 			for (int a = 0; a < levelData.tiles.Length; a++) {
+				
 				TileData tileData = new TileData ();
 
+				if (levelData.final == true && a == 0)
+					tileData.final = true;
+				
 				int height = levelData.tiles [a];
 				int energyAssets = levelData.energyAssets [a];
 
@@ -30,14 +35,26 @@ public class LevelsManager : MonoBehaviour {
 			}
 		}
 	}
-	void Restart()
+	void RestartAllOver()
 	{
 		tileID = 0;
+	}
+	void Restart()
+	{
+		for (int a = tileID; a > 0; a--) {
+			if (tilesData [a].checkPoint) {
+				print ("CheckPoint: " + a);
+				tileID = a;
+				return;
+			}
+		}
 	}
 	void AddFreeTiles()
 	{
 		for (int a = 0; a < 10; a++) {
 			TileData tileData = new TileData ();
+			if (a == 0)
+				tileData.checkPoint = true;
 			tilesData.Add (tileData);
 		}
 	}

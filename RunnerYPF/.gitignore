@@ -2,6 +2,7 @@
 # Unity generated #
 # =============== #
 Temp/
+build/
 Obj/
 UnityGenerated/
 Library/

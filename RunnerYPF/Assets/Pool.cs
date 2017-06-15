@@ -38,8 +38,6 @@ public class Pool : MonoBehaviour
 		for (int i = 0; i < Entries.Length; i++)
 		{
 			var objectPrefab = Entries[i];
-			//create the repository
-			//fill it
 
 			for (int n = 0; n < objectPrefab.Count; n++)
 			{
@@ -48,8 +46,6 @@ public class Pool : MonoBehaviour
 				newObj.transform.SetParent (pooled);
 				newObj.gameObject.SetActive (false);
 				pooledObjects.Add (newObj);
-				//SceneObject ro = newObj.GetComponent<SceneObject>();
-				//PoolObject(ro);
 				id++;
 
 			}
@@ -65,8 +61,7 @@ public class Pool : MonoBehaviour
 				pooledObjectToAdd = pooledObject;
 		}
 		if (pooledObjectToAdd != null)
-		{
-			
+		{			
 			pooledObjectToAdd.transform.SetParent (container);
 			pooledObjectToAdd.transform.localPosition = Vector3.zero;
 			pooledObjectToAdd.transform.localScale = Vector3.one;

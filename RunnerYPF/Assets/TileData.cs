@@ -7,6 +7,8 @@ using System;
 public class TileData {
 	
 	public int height = 1;
+	public bool final;
 	public SceneObjectData sceneObjectData;
+	public bool checkPoint;
 
 }

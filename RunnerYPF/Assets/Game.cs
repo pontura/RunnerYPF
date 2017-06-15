@@ -6,6 +6,9 @@ public class Game : MonoBehaviour {
 
 	public static Game mInstance;
 
+	[HideInInspector]
+	public GameManager gameManager;
+
 	public static Game Instance
 	{
 		get
@@ -16,5 +19,6 @@ public class Game : MonoBehaviour {
 
 	void Awake () {
 		mInstance = this;
+		gameManager = GetComponent<GameManager> ();
 	}
 }

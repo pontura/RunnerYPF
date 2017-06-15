@@ -11,6 +11,11 @@ public class GroundManager : MonoBehaviour {
 	void Start () {
 		Events.OnAddNewLine += OnAddNewLine;
 		Events.Restart += Restart;
+		Events.RestartAllOver += RestartAllOver;
+		Restart ();
+	}
+	void RestartAllOver()
+	{
 		Restart ();
 	}
 	void Restart()

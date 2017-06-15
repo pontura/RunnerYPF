@@ -13,10 +13,12 @@ public class GameManager : MonoBehaviour {
 	public Character character;
 
 	public states state;
+	public bool dontAddGenericObjects;
 
 	public enum states
 	{
 		PLAYING,
+		ENDING,
 		READY,
 		DEAD
 	}
@@ -24,12 +26,29 @@ public class GameManager : MonoBehaviour {
 		Events.SpeedChange += SpeedChange;
 		Events.OnCharacterDie += OnCharacterDie;
 		Events.Restart += Restart;
+		Events.RestartAllOver += Restart;
+		Events.OnFinal += OnFinal;
 		realSpeed = speed;
+		Events.StartGame ();
 	}
-	void OnDestroy () {
-		Events.SpeedChange -= SpeedChange;
-		Events.OnCharacterDie -= OnCharacterDie;
-		Events.Restart -= Restart;
+	void OnFinal()
+	{
+		StartCoroutine (OnFinalCoroutine ());
+	}
+	IEnumerator OnFinalCoroutine()
+	{
+		dontAddGenericObjects = true;
+		yield return new WaitForSeconds (1);
+		state = states.ENDING;
+		yield return new WaitForSeconds (2);
+		state = states.READY;
+		Events.OnLevelComplete ();
+		yield return new WaitForSeconds (1);
+		Events.PoolAllObjects ();
+		yield return new WaitForSeconds (2);
+		Events.RestartAllOver ();
+		dontAddGenericObjects = false;
+		yield return null;
 	}
 	void Restart()
 	{
@@ -41,23 +60,25 @@ public class GameManager : MonoBehaviour {
 	void SpeedChange(int multiplier)
 	{
 		if (multiplier == 1)
-			realSpeed = speed + (2);
+			realSpeed = speed + (2.5f);
 		else if (multiplier == -1)
-			realSpeed = speed - 1;
+			realSpeed = speed - 2;
 		else
 			realSpeed = speed;
 	}
 
 	void Update () {
-		
-		if (state != states.PLAYING)
-			return;
-		
-		Vector3 pos = camera.transform.localPosition;
-		pos.z += realSpeed * Time.deltaTime;
-		distance = pos.z;			
-		camera.transform.localPosition = pos;
-		character.UpdateZPosition (pos.z);
+		if (state == states.PLAYING) {		
+			Vector3 pos = camera.transform.localPosition;
+			pos.z += realSpeed * Time.deltaTime;
+			distance = pos.z;	
+			camera.transform.localPosition = pos;
+			character.UpdateZPosition (pos.z);
+		} else if (state == states.ENDING) {
+			Vector3 pos = character.transform.localPosition;
+			pos.z += speed * Time.deltaTime;
+			character.transform.localPosition = pos;
+		}
 	}
 	void OnCharacterDie()
 	{
@@ -69,6 +90,12 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds (1);
 		Events.PoolAllObjects ();
 		yield return new WaitForSeconds (2);
-		Events.Restart ();
+		if (UI.Instance.lives > 0)
+			Events.Restart ();
+		else {
+			Events.GameOver ();
+			yield return new WaitForSeconds (3);
+			Events.RestartAllOver();
+		}
 	}
 }

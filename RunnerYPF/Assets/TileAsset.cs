@@ -12,8 +12,12 @@ public class TileAsset : MonoBehaviour {
 	{
 		this.isHole = isHole;
 		collider = GetComponent<Collider> ();
-		if(collider != null)
-			collider.enabled = true;
+		if (collider != null) {
+			if(isHole)
+				collider.enabled = false;
+			else
+				collider.enabled = true;
+		}
 		this.tile = _tile;
 		GetComponent<MeshRenderer> ().enabled = !isHole;
 

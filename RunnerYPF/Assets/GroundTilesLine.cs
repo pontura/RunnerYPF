@@ -51,12 +51,14 @@ public class GroundTilesLine : MonoBehaviour {
 	{		
 		SceneObject so = Data.Instance.pool.AddObjectTo ("TileGeneric", transform);
 		if (so == null)
-			Debug.LogError ("A");
+			Debug.LogError ("TileGeneric no Existe");
 		return so.GetComponent<Tile>();
 	}
 	Tile AddPathTile()
 	{
 		Tile tile = Data.Instance.pool.AddObjectTo ("Tile", transform).GetComponent<Tile>();
+		if (tile == null)
+			Debug.LogError ("Tile no Existe");
 		tile.tileData = Data.Instance.levelsManager.GetNextTileData();
 		return tile;
 	}
