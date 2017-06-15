@@ -74,7 +74,7 @@ public class Pool : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("ObjectPool no encontro el objeto: " + objectType + "  bool ");
+			Debug.Log("ObjectPool no encontro el objeto: " + objectType);
 		}
 		return null;
 	}

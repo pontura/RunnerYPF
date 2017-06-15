@@ -43,7 +43,6 @@ public class LevelsManager : MonoBehaviour {
 	{
 		for (int a = tileID; a > 0; a--) {
 			if (tilesData [a].checkPoint) {
-				print ("CheckPoint: " + a);
 				tileID = a;
 				return;
 			}

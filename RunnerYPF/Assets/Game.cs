@@ -8,7 +8,8 @@ public class Game : MonoBehaviour {
 
 	[HideInInspector]
 	public GameManager gameManager;
-
+	[HideInInspector]
+	public GroundManager groundManager;
 	public static Game Instance
 	{
 		get
@@ -20,5 +21,6 @@ public class Game : MonoBehaviour {
 	void Awake () {
 		mInstance = this;
 		gameManager = GetComponent<GameManager> ();
+		groundManager = GetComponent<GroundManager> ();
 	}
 }

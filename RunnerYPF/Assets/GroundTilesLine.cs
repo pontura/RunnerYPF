@@ -75,7 +75,7 @@ public class GroundTilesLine : MonoBehaviour {
 			state = states.ENDING;
 			DestroyLine ();
 			Invoke ("Reset", 1);
-			Events.OnAddNewLine ();
+			Game.Instance.groundManager.OnAddNewLine ();
 		}
 	}
 	void PoolAllObjects()

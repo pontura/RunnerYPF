@@ -7,7 +7,6 @@ public static class Events {
 	public static System.Action StartGame = delegate { };
 	public static System.Action CreatorReset = delegate { };
 	public static System.Action OnCharacterDie = delegate { };
-	public static System.Action OnAddNewLine = delegate { };
 	public static System.Action Jump = delegate { };
 	public static System.Action OnGetEnergy = delegate { };
 	public static System.Action<int> SpeedChange = delegate { };

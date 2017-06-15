@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds (2);
 		state = states.READY;
 		Events.OnLevelComplete ();
-		yield return new WaitForSeconds (1);
 		Events.PoolAllObjects ();
 		yield return new WaitForSeconds (2);
 		Events.RestartAllOver ();

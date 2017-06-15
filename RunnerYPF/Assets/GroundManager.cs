@@ -9,7 +9,6 @@ public class GroundManager : MonoBehaviour {
 	public int z;
 
 	void Start () {
-		Events.OnAddNewLine += OnAddNewLine;
 		Events.Restart += Restart;
 		Events.RestartAllOver += RestartAllOver;
 		Restart ();
@@ -22,19 +21,20 @@ public class GroundManager : MonoBehaviour {
 	{
 		z = 0;
 		for (int a = 0; a < 10; a++) {
-			AddTileLine (a);
+			AddNewTileLine (a);
 		}
 	}
-	void AddTileLine(int _z)
+	void AddNewTileLine(int _z)
 	{
 		z = _z;
 		GroundTilesLine newGroundTileLine = Instantiate(groundTileLine);
 		newGroundTileLine.transform.SetParent (container);
 		newGroundTileLine.transform.localPosition = new Vector3 (0, 0, _z);
 	}
-	void OnAddNewLine()
+	public void OnAddNewLine()
 	{
 		z++;
-		AddTileLine(z);
+		AddNewTileLine (z);
+		//groundTilesLine.transform.localPosition = new Vector3 (0, 0, z);
 	}
 }

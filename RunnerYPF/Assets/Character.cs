@@ -23,12 +23,11 @@ public class Character : MonoBehaviour {
 		Events.Jump += Jump;
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
-		Events.RestartAllOver += Restart;
+		Events.RestartAllOver += RestartAllOver;
 		asset = Instantiate (characterToInstantiate);
 		asset.transform.SetParent (transform);
 		Restart ();
 	}
-
 	void RestartAllOver()
 	{
 		Restart ();
@@ -49,7 +48,7 @@ public class Character : MonoBehaviour {
 	}
 	public void UpdateZPosition(float _z)
 	{
-		if (asset.transform.position.y < 0)
+		if (asset.transform.position.y < 0 && state == states.RUNNING)
 			Die ();
 		
 		liveSince += Time.deltaTime;

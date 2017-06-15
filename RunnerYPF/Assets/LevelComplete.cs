@@ -9,13 +9,13 @@ public class LevelComplete : MonoBehaviour {
 	void Start () {
 		panel.SetActive (false);
 		Events.OnLevelComplete += OnLevelComplete;
-		Events.Restart += Restart;
+		Events.RestartAllOver += RestartAllOver;
 	}
 	void OnLevelComplete()
 	{
 		panel.SetActive (true);
 	}
-	void Restart()
+	void RestartAllOver()
 	{
 		panel.SetActive (false);
 	}
