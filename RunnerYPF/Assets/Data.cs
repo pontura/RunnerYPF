@@ -17,7 +17,7 @@ public class Data : MonoBehaviour
     static Data mInstance = null;
 	public Pool pool;
 	public LevelsManager levelsManager;
-
+	public Settings settings;
     public static Data Instance
     {
         get
@@ -55,6 +55,7 @@ public class Data : MonoBehaviour
        
         DontDestroyOnLoad(this.gameObject);
 
+		settings = GetComponent<Settings> ();
 		levelsManager = GetComponent<LevelsManager> ();
 		pool = GetComponent<Pool> ();
     }

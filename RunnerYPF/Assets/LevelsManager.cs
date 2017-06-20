@@ -19,6 +19,15 @@ public class LevelsManager : MonoBehaviour {
 				
 				TileData tileData = new TileData ();
 
+				if (levelData.other != null && levelData.other [a] == 1)
+					tileData.isRiver = true;
+				else if (levelData.other != null && levelData.other [a] == 2)
+					tileData.obstaclesInLane = TileData.ObstaclesInLane.CAR;
+				else {
+					tileData.isRiver = false;
+					tileData.obstaclesInLane = TileData.ObstaclesInLane.NONE;
+				}
+				
 				if (levelData.final == true && a == 0)
 					tileData.final = true;
 				
@@ -57,7 +66,11 @@ public class LevelsManager : MonoBehaviour {
 			tilesData.Add (tileData);
 		}
 	}
-	public TileData GetNextTileData()
+	public TileData GetTileData()
+	{
+		return tilesData [tileID];
+	}
+	public TileData NextTileData()
 	{		
 		TileData tileData = tilesData [tileID];
 		tileID++;

@@ -10,6 +10,19 @@ public class Settings : MonoBehaviour
 {
 	public List<LevelData> levels;
 
+	public LevelSettings[] levelSettings;
+	[Serializable]
+	public class LevelSettings
+	{
+		public int id;
+		public Color[] topGeneric;
+		public Color[] bottomGeneric;
+		public Color tile;
+	}
+	public LevelSettings GetLevelSettings(int levelID)
+	{
+		return levelSettings [levelID - 1];
+	}
 	void Awake()
 	{
 		LoadDataromServer (LoadResourceTextfile ("levels"));
@@ -35,8 +48,12 @@ public class Settings : MonoBehaviour
 
 		if(content ["final"] != null)
 			data.final =  true;	
+
+		data.tiles = AddData (content ["tiles"]);
+
+		if(content ["other"] != null)
+			data.other = AddData (content ["other"]);	
 		
-		data.tiles = AddData (content ["tiles"]);	
 		data.energyAssets = AddData (content ["energ"]);	
 		levels.Add(data);
 		ShuffleListTexts (levels);
@@ -58,8 +75,12 @@ public class Settings : MonoBehaviour
 	int[] AddData(JSONNode data)
 	{
 		int[] arr = new int[data.Count];
-		for (int a = 0; a < data.Count; a++)
-			arr[a] = int.Parse(data[a]);
+		for (int a = 0; a < data.Count; a++) {
+			if(data[a] == "_")
+				arr [a] = -1;
+			else
+				arr [a] = int.Parse (data [a]);
+		}
 		return arr;
 	}
 
