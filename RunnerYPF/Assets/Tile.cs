@@ -4,24 +4,42 @@ using UnityEngine;
 
 public class Tile : SceneObject {
 
+	public bool isRiver;
 	public bool isPath;
+
+	public MeshRenderer top;
+	public MeshRenderer bottom;
+
 	public TileAsset asset;
 	public TileData tileData;
 	public Animation anim;
 	GroundTilesLine line;
 	public Transform container;
 
-	public void Init(GroundTilesLine line)
-	{
+	public void Init(GroundTilesLine line, Settings.LevelSettings levelSettings)
+	{		
+		if (isPath) {
+			top.material.color = levelSettings.tile;
+			bottom.material.color = levelSettings.tile;
+			if (tileData.obstaclesInLane == TileData.ObstaclesInLane.CAR) {
+				SceneObject so = Data.Instance.pool.AddObjectTo ("CarForward", container);
+				so.GetComponent<MoveSceneObject> ().Init ();
+			}
+		} else {
+			Colorize (levelSettings);
+		}
 		this.line = line;
 		bool isHole = false;
-		if (isPath) {
+
+		if (tileData.isRiver) {
+			isRiver = true;
+		}
+		else if (isPath) {
 			
 			if (tileData.final == true) {
 				SceneObject so = Data.Instance.pool.AddObjectTo ("Final", transform);
 				Events.OnFinal ();
 			}
-			
 			int height= tileData.height;
 			if (height == 0) {
 				isHole = true;
@@ -30,18 +48,56 @@ public class Tile : SceneObject {
 				asset.gameObject.SetActive (true);
 				asset.transform.localPosition = new Vector3 (0, height-1, 0);
 				if (tileData.sceneObjectData != null) {
-					SceneObject so = Data.Instance.pool.AddObjectTo ("Energy", transform);
+					SceneObject so = Data.Instance.pool.AddObjectTo ("Energy", container);
 					so.GetComponent<Energy>().Init(tileData.sceneObjectData.height);
 				}
 			}
 		} else {
-			if (Random.Range (0, 100) < 10 && this.transform.position.x<0 && !Game.Instance.gameManager.dontAddGenericObjects) {
-				SceneObject so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
+			if (!Game.Instance.gameManager.dontAddGenericObjects) {
+				if (transform.position.x == 2)
+					AddFrontSceneObjects ();
+				else
+					AddSceneObjects ();
 			}
 		}
-		asset.Init (this, isHole);
+		asset.Init (this, isHole, isRiver);
+	}
+	void AddFrontSceneObjects()
+	{
+		if (transform.position.z % 3 == 0) {
+			SceneObject so = null;
+			int tileID = (int)transform.position.x;
+			so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
+			so.GetComponent<GenericObject> ().Init (1, tileID);
+		}
+	}
+	void AddSceneObjects()
+	{
+		if (Random.Range (0, 100) < 20 && transform.position.z % 3 == 0) {
+			SceneObject so = null;
+			int tileID = (int)transform.position.x;
+			so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
+			so.GetComponent<GenericObject> ().Init (1, tileID);
+		}
 	}
 
+	void Colorize(Settings.LevelSettings levelSettings)
+	{
+		bool tile1 = false;
+		if (Mathf.Floor (transform.position.x) % 2 == 0 && Mathf.Floor (transform.position.z) % 2 == 0)
+			tile1 = true;
+		else if (Mathf.Floor (transform.position.x) % 2 !=0 && Mathf.Floor (transform.position.z) % 2 != 0)
+			tile1 = true;
+
+		if(tile1)
+		{
+			top.material.color = levelSettings.topGeneric [0];
+			bottom.material.color = levelSettings.bottomGeneric [1];
+		} else {
+			top.material.color = levelSettings.topGeneric[1];
+			bottom.material.color = levelSettings.bottomGeneric[0];
+		}
+	}
 	public void AnimateIn()
 	{
 		anim.Play ("in");

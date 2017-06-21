@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 	public float distance;
 
 	public float speed;
-	private float realSpeed;
+	public float realSpeed;
 
 	public Camera camera;
 	public Character character;

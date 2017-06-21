@@ -20,19 +20,20 @@ public class GroundTilesLine : MonoBehaviour {
 		Events.PoolAllObjects += PoolAllObjects;
 		if (transform == null)
 			return;
-		AddTiles ();
+		AddTiles (Data.Instance.settings.GetLevelSettings(1));
 	}
 	void OnDestroy () {
 		Events.PoolAllObjects -= PoolAllObjects;
 	}
 
-	public void AddTiles()
+	public void AddTiles(Settings.LevelSettings levelSettings)
 	{
+		TileData data = Data.Instance.levelsManager.GetTileData();
 		for (int a = 0; a < totalTiles; a++) {
-			AddTile(a-(totalTiles/2));
+			AddTile(data, a-(totalTiles/2), levelSettings);
 		}
 	}
-	public void AddTile(int _x)
+	public void AddTile(TileData data, int _x, Settings.LevelSettings levelSettings)
 	{
 		Tile newTile;
 
@@ -41,9 +42,10 @@ public class GroundTilesLine : MonoBehaviour {
 		else
 			newTile = AddPathTile ();
 
+		newTile.isRiver = data.isRiver;
 		tiles.Add (newTile);
 		newTile.transform.localPosition = new Vector3 (_x, 0, 0);
-		newTile.Init (this);
+		newTile.Init (this, levelSettings);
 
 		newTile.AnimateIn ();
 	}
@@ -59,7 +61,7 @@ public class GroundTilesLine : MonoBehaviour {
 		Tile tile = Data.Instance.pool.AddObjectTo ("Tile", transform).GetComponent<Tile>();
 		if (tile == null)
 			Debug.LogError ("Tile no Existe");
-		tile.tileData = Data.Instance.levelsManager.GetNextTileData();
+		tile.tileData = Data.Instance.levelsManager.NextTileData();
 		return tile;
 	}
 
