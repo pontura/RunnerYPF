@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: cac6a6bf6e63c754b9fcc5d4ea6fbc57
+timeCreated: 1498333422
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DIN-Black
+  fontNames:
+  - DIN-Black
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
