@@ -10,6 +10,8 @@ public class Character : MonoBehaviour {
 	public states state;
 	private float liveSince;
 	public CharacterAsset asset;
+
+
 	public enum states
 	{
 		IDLE,
@@ -24,6 +26,7 @@ public class Character : MonoBehaviour {
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
 		Events.RestartAllOver += RestartAllOver;
+
 		asset = Instantiate (characterToInstantiate);
 		asset.transform.SetParent (transform);
 		Restart ();
@@ -36,11 +39,11 @@ public class Character : MonoBehaviour {
 	{
 		liveSince = 0;
 		state = states.IDLE;
-		asset.transform.localPosition = new Vector3 (1, 4, 0);
+		asset.transform.localPosition = new Vector3 (0.7f, 4, 0);
 		rb = asset.rigidBody;
 		rb.velocity = Vector3.zero;
 		asset.Init (this);
-		state = states.RUNNING;
+		OnFloor ();
 	}
 	void OnDestroy () {
 		Events.Jump -= Jump;
@@ -75,6 +78,7 @@ public class Character : MonoBehaviour {
 		jumps++;
 		rb.velocity = Vector3.zero;
 		rb.AddForce (0, jumpForce, 0);
+		asset.Jump ();
 	}
 	void JumpStartEnd()
 	{
@@ -83,18 +87,25 @@ public class Character : MonoBehaviour {
 	}
 	public void OnFloor()
 	{
+		if (state == states.RUNNING || state == states.DEAD)
+			return;
 		jumps = 0;
 		state = states.RUNNING;
+		asset.OnFloor ();
 	}
+	int realSpeed = 0;
 	void SpeedChange (int multiplier) {
+		this.realSpeed = multiplier;
 		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
 			return;
+		asset.Run (realSpeed);
 	}
 	public void HitWithObstacle()
 	{
 		if (liveSince < 1)
 			return;
 		Die ();
+		asset.Hit();
 	}
 	void Die()
 	{

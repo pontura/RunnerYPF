@@ -7,7 +7,6 @@ public class UI : MonoBehaviour {
 
 	public Text scoreField;
 	public Text timerField;
-	public Text livesField;
 
 	public int score;
 	private int totalSec = 59;
@@ -15,6 +14,11 @@ public class UI : MonoBehaviour {
 	public int lives;
 	public static UI Instance;
 	bool timeRunning;
+
+	public Image timerImage;
+
+	public GameObject[] livesAssets;
+
 	void Awake () {
 		Instance = this;
 		Events.OnGetEnergy += OnGetEnergy;
@@ -45,6 +49,9 @@ public class UI : MonoBehaviour {
 	}
 	void RestartAllOver()
 	{
+		foreach (GameObject go in livesAssets)
+			go.SetActive (true);
+		
 		StartGame ();
 	}
 	void TimerLoop()
@@ -68,6 +75,8 @@ public class UI : MonoBehaviour {
 		else
 			sec--;
 
+		timerImage.fillAmount = 1-((float)(totalSec-sec)/(float)totalSec);
+
 	}
 	void OnGetEnergy () {
 		score++;
@@ -76,10 +85,18 @@ public class UI : MonoBehaviour {
 
 	void SetScore()
 	{
-		scoreField.text = "Score: " + score;
+		scoreField.text = score.ToString ();
 	}
 	void SetLives()
 	{
-		livesField.text = "Vidas: " + lives;
+		foreach (GameObject go in livesAssets)
+			go.SetActive (false);
+		
+		if(lives>0)
+			livesAssets [0].SetActive (true);
+		if(lives>1)
+			livesAssets [1].SetActive (true);
+		if(lives>2)
+			livesAssets [2].SetActive (true);
 	}
 }

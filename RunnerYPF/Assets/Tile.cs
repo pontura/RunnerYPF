@@ -53,34 +53,48 @@ public class Tile : SceneObject {
 				}
 			}
 		} else {
+
+
+			/////////////level 1
 			if (!Game.Instance.gameManager.dontAddGenericObjects) {
 				if (transform.position.x == 2)
-					AddFrontSceneObjects ();
+					AddSceneObjectsEvery (3); // faroles
+				else if (transform.position.x == -2)
+					AddSceneObjectsEvery (1); //lineas Punteadas
 				else
-					AddSceneObjects ();
+					AddSceneObjectsInRandom (40, 3); //autos
 			}
+			/////////////level 1
+
+
 		}
 		asset.Init (this, isHole, isRiver);
 	}
-	void AddFrontSceneObjects()
+	void AddSceneObjectsEvery(int num)
 	{
-		if (transform.position.z % 3 == 0) {
-			SceneObject so = null;
-			int tileID = (int)transform.position.x;
-			so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
-			so.GetComponent<GenericObject> ().Init (1, tileID);
+		if (num == 1) {			
+			AddObject ();
+		} else
+		if (transform.position.z % num == 0) {			
+			AddObject ();
 		}
 	}
-	void AddSceneObjects()
+	void AddEveryTile()
 	{
-		if (Random.Range (0, 100) < 20 && transform.position.z % 3 == 0) {
-			SceneObject so = null;
-			int tileID = (int)transform.position.x;
-			so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
-			so.GetComponent<GenericObject> ().Init (1, tileID);
-		}
+		AddObject ();
 	}
-
+	void AddSceneObjectsInRandom(int posibilityIn100, int tilesSeparation)
+	{
+		if (Random.Range (0, 100) < posibilityIn100 && (int)transform.position.z % tilesSeparation == 0)
+			AddObject ();
+	}
+	void AddObject()
+	{
+		SceneObject so = null;
+		int tileID = (int)transform.position.x;
+		so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
+		so.GetComponent<GenericObject> ().Init (1, tileID);
+	}
 	void Colorize(Settings.LevelSettings levelSettings)
 	{
 		bool tile1 = false;

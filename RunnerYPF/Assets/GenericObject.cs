@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class GenericObject : SceneObject {
 
-	public GameObject[] level1Generic;
+	public GameObject[] level1Lane1;
+	public GameObject[] level1Lane2;
+	public GameObject[] level1Lane3;
+	public GameObject[] level1Lane4;
 	public GameObject[] level1LaneFront;
+
 	public float speed = 0;
 	bool isOut = false;
 	SpriteRenderer sr;
@@ -21,16 +25,21 @@ public class GenericObject : SceneObject {
 		transform.localPosition = pos;
 
 		if (levelID == 1) {
-			if (laneID == 2)
+			if (laneID == -4)
+				AddMolino ();
+			else if (laneID == 2)
 				SetRandomOn (level1LaneFront);
-			else if (laneID == -3 || laneID == -2)
+			else if (laneID == -3)
 			{
 				speed = 2;
-				SetOn (level1Generic[0]);
-			} else if (laneID == -1 || laneID == 0)
+				SetOn (level1Lane2);
+			} else if (laneID == -2)
+			{
+				SetOn (level1Lane3);
+			} else if (laneID == -1)
 			{
 				speed = -1.2f;
-				SetOn (level1Generic[1]);
+				SetOn (level1Lane4);
 				Invoke ("SetOutOfTile", 1);
 			}
 		}
@@ -44,24 +53,34 @@ public class GenericObject : SceneObject {
 		c.a =1;
 		sr.color = c;
 	}
+	void AddMolino()
+	{
+		level1Lane1 [Random.Range (0, level1Lane1.Length)].SetActive (true);
+	}
 	void SetOutOfTile()
 	{
 		transform.SetParent (Game.Instance.groundManager.container);
 	}
 	void Reset()
 	{
-		foreach (GameObject go in level1Generic)
+		foreach (GameObject go in level1Lane1)
+			go.SetActive (false);
+		foreach (GameObject go in level1Lane2)
+			go.SetActive (false);
+		foreach (GameObject go in level1Lane3)
+			go.SetActive (false);
+		foreach (GameObject go in level1Lane4)
 			go.SetActive (false);
 		foreach (GameObject go in level1LaneFront)
 			go.SetActive (false);
 	}
 	void SetRandomOn(GameObject[] all)
 	{
-		SetOn(all [Random.Range (0, all.Length)]);
+		all [Random.Range (0, all.Length)].SetActive (true);
 	}
-	void SetOn(GameObject go)
+	void SetOn(GameObject[] go)
 	{
-		go.SetActive (true);
+		go [Random.Range (0, go.Length)].SetActive (true);
 	}
 	void Update()
 	{
