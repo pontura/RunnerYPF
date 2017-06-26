@@ -54,9 +54,9 @@ public class Energy : SceneObject {
 		if (catched) {
 			transform.SetParent (Game.Instance.gameManager.camera.transform);
 			dest = transform.position;
-			dest.z += 10;
-			dest.y = 3;
-			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime*5);
+			dest.z += 18;
+			dest.y = 1;
+			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime*3);
 			//transform.localScale *= 1.01f;
 		}
 	}

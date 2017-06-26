@@ -10,7 +10,7 @@ public class Character : MonoBehaviour {
 	public states state;
 	private float liveSince;
 	public CharacterAsset asset;
-
+	public Transform container;
 
 	public enum states
 	{
@@ -28,7 +28,10 @@ public class Character : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 
 		asset = Instantiate (characterToInstantiate);
-		asset.transform.SetParent (transform);
+		asset.transform.SetParent (container);
+		asset.transform.localPosition = Vector3.zero;
+		asset.transform.localEulerAngles = Vector3.zero;
+
 		Restart ();
 	}
 	void RestartAllOver()
