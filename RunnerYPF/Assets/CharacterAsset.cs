@@ -73,4 +73,8 @@ public class CharacterAsset : MonoBehaviour {
 			break;
 		}
 	}
+	public void OnFinalDone()
+	{
+		anim.CrossFade ("final", 0.1f);
+	}
 }

@@ -18,7 +18,8 @@ public class Character : MonoBehaviour {
 		RUNNING,
 		STARTJUMPING,
 		JUMPING,
-		DEAD
+		DEAD,
+		DONE
 	}
 
 	void Start () {
@@ -40,6 +41,7 @@ public class Character : MonoBehaviour {
 	}
 	void Restart()
 	{
+		asset.enabled = true;
 		liveSince = 0;
 		state = states.IDLE;
 		asset.transform.localPosition = new Vector3 (0.7f, 4, 0);
@@ -64,7 +66,8 @@ public class Character : MonoBehaviour {
 	}
 	int jumps = 0;
 	void Jump () {
-		
+		if (state == states.DONE)
+			return;
 		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
 			return;
 		
@@ -85,11 +88,15 @@ public class Character : MonoBehaviour {
 	}
 	void JumpStartEnd()
 	{
+		if (state == states.DONE)
+			return;
 		if (state == states.STARTJUMPING)
 			state = states.JUMPING;
 	}
 	public void OnFloor()
 	{
+		if (state == states.DONE)
+			return;
 		if (state == states.RUNNING || state == states.DEAD)
 			return;
 		jumps = 0;
@@ -98,6 +105,8 @@ public class Character : MonoBehaviour {
 	}
 	int realSpeed = 0;
 	void SpeedChange (int multiplier) {
+		if (state == states.DONE)
+			return;
 		this.realSpeed = multiplier;
 		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
 			return;
@@ -109,6 +118,13 @@ public class Character : MonoBehaviour {
 			return;
 		Die ();
 		asset.Hit();
+	}
+	public void FinalDone()
+	{
+		if (state == states.DONE)
+			return;
+		state = states.DONE;
+		asset.OnFinalDone ();
 	}
 	void Die()
 	{
