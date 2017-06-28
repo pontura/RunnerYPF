@@ -48,15 +48,21 @@ public class Character : MonoBehaviour {
 		rb = asset.rigidBody;
 		rb.velocity = Vector3.zero;
 		asset.Init (this);
+		Invoke ("DejarCaer", 0.25f);
 		OnFloor ();
 	}
+
+	void DejarCaer(){
+		rb.isKinematic = false;
+	}
+
 	void OnDestroy () {
 		Events.Jump -= Jump;
 		Events.SpeedChange -= SpeedChange;
 	}
 	public void UpdateZPosition(float _z)
 	{
-		if (asset.transform.position.y < 0 && state == states.RUNNING)
+		if (asset.transform.position.y < 0)
 			Die ();
 		
 		liveSince += Time.deltaTime;
