@@ -60,7 +60,7 @@ public class Tile : SceneObject {
 				if (transform.position.x == 2)
 					AddSceneObjectsEvery (3); // faroles
 				else if (transform.position.x == -3)
-					AddSceneObjectsEvery (14); //estacion
+					AddSceneObjectsEvery (30); //estacion
 				else if (transform.position.x == -4)
 					AddSceneObjectsEvery (9); //panel o molino
 				else
