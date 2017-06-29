@@ -22,6 +22,7 @@ public class GenericObject : SceneObject {
 	[Serializable]
 	public class Pattern {
 		//public List<PatternModule> modules;
+		public int offset;
 		public int moduleLength;
 		public Pattern[] subPatterns;
 		public Pattern currentSubP;
@@ -31,9 +32,12 @@ public class GenericObject : SceneObject {
 		}
 
 		public int GetModuleCount(int laneC){
-			int result = (laneC / moduleLength) % subPatterns.Length;
-			Debug.Log (result);
+			int result = ((laneC - offset) / moduleLength) % subPatterns.Length;
 			return result;
+		}
+
+		public bool ShowSubPattern(int laneC){
+			return ((laneC%moduleLength) - currentSubP.offset)% currentSubP.moduleLength == 0;
 		}
 	}
 
@@ -86,7 +90,7 @@ public class GenericObject : SceneObject {
 	void AddLinePattern(Pattern p)
 	{		
 		p.NextModule (laneCount);
-		if(laneCount%p.currentSubP.moduleLength == 0)
+		if(p.ShowSubPattern(laneCount))
 			level1Lane4 [p.GetModuleCount(laneCount)].SetActive (true);
 	}
 	void SetOutOfTile()
