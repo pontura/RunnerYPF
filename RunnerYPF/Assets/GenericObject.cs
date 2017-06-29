@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GenericObject : SceneObject {
 
@@ -14,12 +15,39 @@ public class GenericObject : SceneObject {
 	bool isOut = false;
 	SpriteRenderer sr;
 
-	public void Init(int levelID, int laneID) {
+	int laneCount=0;
+
+	public Pattern fondoLevel1;
+
+	[Serializable]
+	public class Pattern {
+		//public List<PatternModule> modules;
+		public int moduleLength;
+		public Pattern[] subPatterns;
+		public Pattern currentSubP;
+
+		public void NextModule(int laneC){			
+			currentSubP = subPatterns [GetModuleCount(laneC)];
+		}
+
+		public int GetModuleCount(int laneC){
+			int result = (laneC / moduleLength) % subPatterns.Length;
+			Debug.Log (result);
+			return result;
+		}
+	}
+
+	[Serializable]
+	public class PatternModule {
+		public int[] length;
+	}
+
+	public void Init(int levelID, int laneID, int laneZ) {
 		isOut = false;
 		Reset ();
 		GameObject go;
 		speed = 0;
-
+		laneCount = laneZ;
 		Vector3 pos = transform.localPosition;
 		pos.z =0;
 		transform.localPosition = pos;
@@ -34,10 +62,11 @@ public class GenericObject : SceneObject {
 				speed = 1.2f;
 				SetOn (level1Lane2);
 				Invoke ("SetOutOfTile", 1);
-			} else if (laneID == -3) 
-				SetOn (level1Lane3);
-			else if (laneID == -4) 
-				AddMolino ();
+			} /*else if (laneID == -3)
+				SetOn (level1Lane3);*/
+			else if (laneID == -4)
+				AddLinePattern (fondoLevel1);
+				//AddMolino ();
 						 
 		}
 
@@ -52,7 +81,13 @@ public class GenericObject : SceneObject {
 	}
 	void AddMolino()
 	{
-		level1Lane4 [Random.Range (0, level1Lane4.Length)].SetActive (true);
+		level1Lane4 [UnityEngine.Random.Range (0, level1Lane4.Length)].SetActive (true);
+	}
+	void AddLinePattern(Pattern p)
+	{		
+		p.NextModule (laneCount);
+		if(laneCount%p.currentSubP.moduleLength == 0)
+			level1Lane4 [p.GetModuleCount(laneCount)].SetActive (true);
 	}
 	void SetOutOfTile()
 	{
@@ -73,11 +108,11 @@ public class GenericObject : SceneObject {
 	}
 	void SetRandomOn(GameObject[] all)
 	{
-		all [Random.Range (0, all.Length)].SetActive (true);
+		all [UnityEngine.Random.Range (0, all.Length)].SetActive (true);
 	}
 	void SetOn(GameObject[] go)
 	{
-		go [Random.Range (0, go.Length)].SetActive (true);
+		go [UnityEngine.Random.Range (0, go.Length)].SetActive (true);
 	}
 	void Update()
 	{

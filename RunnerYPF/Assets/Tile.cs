@@ -62,7 +62,7 @@ public class Tile : SceneObject {
 				else if (transform.position.x == -3)
 					AddSceneObjectsEvery (30); //estacion
 				else if (transform.position.x == -4)
-					AddSceneObjectsEvery (9); //panel o molino
+					AddSceneObjectsEvery (1); //panel o molino
 				else
 					AddSceneObjectsInRandom (40, 3); //autos
 			}
@@ -95,7 +95,7 @@ public class Tile : SceneObject {
 		SceneObject so = null;
 		int tileID = (int)transform.position.x;
 		so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
-		so.GetComponent<GenericObject> ().Init (1, tileID);
+		so.GetComponent<GenericObject> ().Init (1, tileID, (int)transform.position.z);
 	}
 	void Colorize(Settings.LevelSettings levelSettings)
 	{
