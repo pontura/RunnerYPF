@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GenericObject : SceneObject {
 
-	public GameObject[] level1Lane1;
-	public GameObject[] level1Lane2;
-	public GameObject[] level1Lane3;
 	public GameObject[] level1Lane4;
+	public GameObject[] level1Lane3;
+	public GameObject[] level1Lane2;
+	public GameObject[] level1Lane1;
 	public GameObject[] level1LaneFront;
 
 	public float speed = 0;
@@ -25,23 +25,20 @@ public class GenericObject : SceneObject {
 		transform.localPosition = pos;
 
 		if (levelID == 1) {
-			if (laneID == -4)
-				AddMolino ();
-			else if (laneID == 2)
+			if (laneID == 2)
 				SetRandomOn (level1LaneFront);
-			else if (laneID == -3)
-			{
-				speed = 2;
+			else if (laneID == -1) { 
+				speed = 2f;
+				SetOn (level1Lane1);
+			} else if (laneID == -2) {
+				speed = 1.2f;
 				SetOn (level1Lane2);
-			} else if (laneID == -2)
-			{
-				SetOn (level1Lane3);
-			} else if (laneID == -1)
-			{
-				speed = -1.2f;
-				SetOn (level1Lane4);
 				Invoke ("SetOutOfTile", 1);
-			}
+			} else if (laneID == -3) 
+				SetOn (level1Lane3);
+			else if (laneID == -4) 
+				AddMolino ();
+						 
 		}
 
 
@@ -55,7 +52,7 @@ public class GenericObject : SceneObject {
 	}
 	void AddMolino()
 	{
-		level1Lane1 [Random.Range (0, level1Lane1.Length)].SetActive (true);
+		level1Lane4 [Random.Range (0, level1Lane4.Length)].SetActive (true);
 	}
 	void SetOutOfTile()
 	{
@@ -63,13 +60,13 @@ public class GenericObject : SceneObject {
 	}
 	void Reset()
 	{
-		foreach (GameObject go in level1Lane1)
-			go.SetActive (false);
-		foreach (GameObject go in level1Lane2)
+		foreach (GameObject go in level1Lane4)
 			go.SetActive (false);
 		foreach (GameObject go in level1Lane3)
 			go.SetActive (false);
-		foreach (GameObject go in level1Lane4)
+		foreach (GameObject go in level1Lane2)
+			go.SetActive (false);
+		foreach (GameObject go in level1Lane1)
 			go.SetActive (false);
 		foreach (GameObject go in level1LaneFront)
 			go.SetActive (false);

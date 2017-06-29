@@ -59,8 +59,10 @@ public class Tile : SceneObject {
 			if (!Game.Instance.gameManager.dontAddGenericObjects) {
 				if (transform.position.x == 2)
 					AddSceneObjectsEvery (3); // faroles
-				else if (transform.position.x == -2)
-					AddSceneObjectsEvery (1); //lineas Punteadas
+				else if (transform.position.x == -3)
+					AddSceneObjectsEvery (14); //estacion
+				else if (transform.position.x == -4)
+					AddSceneObjectsEvery (9); //panel o molino
 				else
 					AddSceneObjectsInRandom (40, 3); //autos
 			}
