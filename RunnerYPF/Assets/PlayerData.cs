@@ -8,11 +8,21 @@ public class PlayerData : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		Events.OnLevelComplete += OnLevelComplete;
+	}
+
+	void OnDestroy(){
+		Events.OnLevelComplete -= OnLevelComplete;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void OnLevelComplete(){
+		level++;
+		if (level > 3)
+			level = 1;
 	}
 }

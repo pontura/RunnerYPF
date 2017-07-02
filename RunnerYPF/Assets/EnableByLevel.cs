@@ -16,12 +16,25 @@ public class EnableByLevel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		foreach (ElementByLevel e in elements)
-			e.element.SetActive (Data.Instance.playerData.level == e.levelId);
+		Events.OnLevelComplete += OnLevelComplete;
+		SetElements ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void OnDestroy(){
+		Events.OnLevelComplete -= OnLevelComplete;
+	}
+
+	void SetElements(){
+		foreach (ElementByLevel e in elements)
+			e.element.SetActive (Data.Instance.playerData.level == e.levelId);
+	}
+
+	void OnLevelComplete(){
+		SetElements ();
 	}
 }
