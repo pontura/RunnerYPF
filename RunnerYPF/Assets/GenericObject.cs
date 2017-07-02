@@ -9,6 +9,7 @@ public class GenericObject : SceneObject {
 	public GameObject[] level1Lane3;
 	public GameObject[] level1Lane2;
 	public GameObject[] level1Lane1;
+	public GameObject[] level1Lane0;
 	public GameObject[] level1LaneFront;
 
 	public float speed = 0;
@@ -56,13 +57,14 @@ public class GenericObject : SceneObject {
 		pos.z =0;
 		transform.localPosition = pos;
 
+		//level 1
 		if (levelID == 1) {
 			if (laneID == 2)
 				SetRandomOn (level1LaneFront);
 			else if (laneID == -1) { 
 				speed = 2f;
 				SetOn (level1Lane1);
-			} else if (laneID == -2) {
+			}/* else if (laneID == -2) {
 				speed = 1.2f;
 				SetOn (level1Lane2);
 				Invoke ("SetOutOfTile", 1);
@@ -70,8 +72,44 @@ public class GenericObject : SceneObject {
 				SetOn (level1Lane3);*/
 			else if (laneID == -4)
 				AddLinePattern (fondoLevel1);
-				//AddMolino ();
-						 
+				//AddMolino ();						 
+		}
+
+		//level 2
+		else if (levelID == 2) {
+			if (laneID == 2)
+				SetRandomOn (level1LaneFront);
+			else if (laneID == -1) { 
+				speed = 2f;
+				SetOn (level1Lane1);
+			}/* else if (laneID == -2) {
+				speed = 1.2f;
+				SetOn (level1Lane2);
+				Invoke ("SetOutOfTile", 1);
+			} /*else if (laneID == -3)
+				SetOn (level1Lane3);*/
+			else if (laneID == -4)
+				AddLinePattern (fondoLevel1);
+			//AddMolino ();
+		}
+
+		//level 3
+		if (levelID == 3) {
+			if (laneID == 2)
+				SetRandomOn (level1LaneFront);
+			else if (laneID == -1) { 
+				speed = 2f;
+				SetOn (level1Lane1);
+			}/* else if (laneID == -2) {
+				speed = 1.2f;
+				SetOn (level1Lane2);
+				Invoke ("SetOutOfTile", 1);
+			} /*else if (laneID == -3)
+				SetOn (level1Lane3);*/
+			else if (laneID == -4)
+				AddLinePattern (fondoLevel1);
+			//AddMolino ();
+
 		}
 
 
@@ -100,15 +138,15 @@ public class GenericObject : SceneObject {
 	void Reset()
 	{
 		foreach (GameObject go in level1Lane4)
-			go.SetActive (false);
+			if(go!=null)go.SetActive (false);
 		foreach (GameObject go in level1Lane3)
-			go.SetActive (false);
+			if(go!=null)go.SetActive (false);
 		foreach (GameObject go in level1Lane2)
-			go.SetActive (false);
+			if(go!=null)go.SetActive (false);
 		foreach (GameObject go in level1Lane1)
-			go.SetActive (false);
+			if(go!=null)go.SetActive (false);
 		foreach (GameObject go in level1LaneFront)
-			go.SetActive (false);
+			if(go!=null)go.SetActive (false);
 	}
 	void SetRandomOn(GameObject[] all)
 	{

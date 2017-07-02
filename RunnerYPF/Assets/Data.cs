@@ -18,6 +18,7 @@ public class Data : MonoBehaviour
 	public Pool pool;
 	public LevelsManager levelsManager;
 	public Settings settings;
+	public PlayerData playerData;
     public static Data Instance
     {
         get
@@ -58,6 +59,7 @@ public class Data : MonoBehaviour
 		settings = GetComponent<Settings> ();
 		levelsManager = GetComponent<LevelsManager> ();
 		pool = GetComponent<Pool> ();
+		playerData = GetComponent<PlayerData> ();
     }
 
 }

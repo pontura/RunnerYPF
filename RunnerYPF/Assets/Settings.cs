@@ -8,6 +8,8 @@ using SimpleJSON;
 
 public class Settings : MonoBehaviour
 {
+
+	public String[] levelsPath;
 	public List<LevelData> levels;
 
 	public LevelSettings[] levelSettings;
@@ -25,7 +27,8 @@ public class Settings : MonoBehaviour
 	}
 	void Awake()
 	{
-		LoadDataromServer (LoadResourceTextfile ("levels"));
+		foreach(String s in levelsPath)
+		LoadDataromServer (LoadResourceTextfile (s));
 	}
 	public static string LoadResourceTextfile(string path)
 	{

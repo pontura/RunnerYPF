@@ -20,7 +20,7 @@ public class GroundTilesLine : MonoBehaviour {
 		Events.PoolAllObjects += PoolAllObjects;
 		if (transform == null)
 			return;
-		AddTiles (Data.Instance.settings.GetLevelSettings(1));
+		AddTiles (Data.Instance.settings.GetLevelSettings(Data.Instance.playerData.level));
 	}
 	void OnDestroy () {
 		Events.PoolAllObjects -= PoolAllObjects;

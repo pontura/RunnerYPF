@@ -56,16 +56,45 @@ public class Tile : SceneObject {
 
 
 			/////////////level 1
-			if (!Game.Instance.gameManager.dontAddGenericObjects) {
-				if (transform.position.x == 2)
-					AddSceneObjectsEvery (3); // faroles
-				else if (transform.position.x == -3)
-					AddSceneObjectsEvery (30); //estacion
-				else if (transform.position.x == -4)
-					AddSceneObjectsEvery (1); //panel o molino
-				else
-					AddSceneObjectsInRandom (40, 3); //autos
+			if (levelSettings.id == 1) {
+				if (!Game.Instance.gameManager.dontAddGenericObjects) {
+					if (transform.position.x == 2)
+						AddSceneObjectsEvery (3); // faroles
+					else if (transform.position.x == -3)
+						AddSceneObjectsEvery (30); //estacion
+					else if (transform.position.x == -4)
+						AddSceneObjectsEvery (1); //panel o molino
+					else
+						AddSceneObjectsInRandom (40, 3); //autos
+				}
 			}
+			/////////////level 2
+			else if (levelSettings.id == 2) {
+				if (!Game.Instance.gameManager.dontAddGenericObjects) {
+					if (transform.position.x == 2)
+						AddSceneObjectsEvery (3); // faroles
+					else if (transform.position.x == -3)
+						AddSceneObjectsEvery (30); //estacion
+					else if (transform.position.x == -4)
+						AddSceneObjectsEvery (1); //panel o molino
+					else
+						AddSceneObjectsInRandom (40, 3); //autos
+				}
+			}
+			/////////////level 3
+			else if (levelSettings.id == 3) {
+				if (!Game.Instance.gameManager.dontAddGenericObjects) {
+					if (transform.position.x == 2)
+						AddSceneObjectsEvery (3); // faroles
+					else if (transform.position.x == -3)
+						AddSceneObjectsEvery (30); //estacion
+					else if (transform.position.x == -4)
+						AddSceneObjectsEvery (1); //panel o molino
+					else
+						AddSceneObjectsInRandom (40, 3); //autos
+				}
+			}
+
 			/////////////level 1
 
 
@@ -95,7 +124,7 @@ public class Tile : SceneObject {
 		SceneObject so = null;
 		int tileID = (int)transform.position.x;
 		so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
-		so.GetComponent<GenericObject> ().Init (1, tileID, (int)transform.position.z);
+		so.GetComponent<GenericObject> ().Init (Data.Instance.playerData.level, tileID, (int)transform.position.z);
 	}
 	void Colorize(Settings.LevelSettings levelSettings)
 	{
