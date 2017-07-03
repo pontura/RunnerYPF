@@ -7,6 +7,8 @@ public class Energy : SceneObject {
 
 	bool catched;
 
+	AudioSource source;
+
 	Character character;
 	[Serializable]
 	public class EnergyAsset
@@ -20,6 +22,7 @@ public class Energy : SceneObject {
 
 	public void Init(int _y)
 	{
+		source = GetComponent<AudioSource> ();
 
 		foreach (EnergyAsset ea in level1) {
 			ea.active.SetActive (false);
@@ -39,12 +42,16 @@ public class Energy : SceneObject {
 	{
 		character = other.gameObject.GetComponentInParent<Character> ();
 		if (character != null) {
+			source.pitch = 0.7937f * Mathf.Pow(1.122462f,(int)(UnityEngine.Random.value * 3));
+			source.PlayOneShot (source.clip);
+
 			activeAsset.active.SetActive (false);
 			activeAsset.itemToBar.SetActive (true);
 
 			Events.OnGetEnergy ();
 			catched = true;
-			Invoke ("Done", 0.25f);
+			//Invoke ("Done", 0.25f);
+			Invoke ("Done", 2f);
 		}
 	}
 

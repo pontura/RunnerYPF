@@ -12,6 +12,8 @@ public class Character : MonoBehaviour {
 	public CharacterAsset asset;
 	public Transform container;
 
+	CharacterSfx sfx;
+
 	public enum states
 	{
 		IDLE,
@@ -23,6 +25,9 @@ public class Character : MonoBehaviour {
 	}
 
 	void Start () {
+
+		sfx = GetComponent<CharacterSfx> ();
+
 		Events.Jump += Jump;
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
@@ -44,11 +49,13 @@ public class Character : MonoBehaviour {
 		asset.enabled = true;
 		liveSince = 0;
 		state = states.IDLE;
+		sfx.state = state;
 		asset.transform.localPosition = new Vector3 (0.7f, 4, 0);
 		rb = asset.rigidBody;
 		rb.velocity = Vector3.zero;
 		asset.Init (this);
 		Invoke ("DejarCaer", 0.25f);
+		sfx.Restart ();
 		OnFloor ();
 	}
 
@@ -83,9 +90,12 @@ public class Character : MonoBehaviour {
 			return;
 		if (jumps == 0) {
 			state = states.STARTJUMPING;
+			sfx.state = state;
 			Invoke ("JumpStartEnd", 0.1f);
 		} else {
 			state = states.JUMPING;
+			sfx.state = state;
+			sfx.Jump (false);
 		}
 		jumps++;
 		rb.velocity = Vector3.zero;
@@ -96,8 +106,11 @@ public class Character : MonoBehaviour {
 	{
 		if (state == states.DONE)
 			return;
-		if (state == states.STARTJUMPING)
+		if (state == states.STARTJUMPING) {
 			state = states.JUMPING;
+			sfx.state = state;
+			sfx.Jump (true);
+		}
 	}
 	public void OnFloor()
 	{
@@ -107,6 +120,7 @@ public class Character : MonoBehaviour {
 			return;
 		jumps = 0;
 		state = states.RUNNING;
+		sfx.state = state;
 		asset.OnFloor ();
 	}
 	int realSpeed = 0;
@@ -117,6 +131,8 @@ public class Character : MonoBehaviour {
 		if (Game.Instance.gameManager.state != GameManager.states.PLAYING)
 			return;
 		asset.Run (realSpeed);
+		sfx.Run (multiplier);
+
 	}
 	public void HitWithObstacle()
 	{
@@ -130,13 +146,19 @@ public class Character : MonoBehaviour {
 		if (state == states.DONE)
 			return;
 		state = states.DONE;
+		sfx.state = state;
+		sfx.Stop ();
 		asset.OnFinalDone ();
 	}
 	void Die()
 	{
 		if (state == states.DEAD)
 			return;
+		sfx.Die ();
 		state = states.DEAD;
+		sfx.state = state;
 		Events.OnCharacterDie ();
 	}
+
+
 }
