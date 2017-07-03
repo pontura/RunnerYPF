@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour {
 		} else if (state == states.ENDING) {
 			Vector3 pos = character.transform.localPosition;
 			pos.z += speed * Time.deltaTime;
-			character.transform.localPosition = pos;
+			//character.transform.localPosition = pos;
 		}
 	}
 	void OnCharacterDie()
