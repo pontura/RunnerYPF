@@ -39,6 +39,8 @@ public class CharacterSfx : MonoBehaviour {
 	}
 
 	public void Restart (){
+		if(source==null)
+			source = GetComponent<AudioSource> ();
 		source.loop = false;
 		source.clip = restart;
 		source.pitch = 1;

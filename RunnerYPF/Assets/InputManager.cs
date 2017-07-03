@@ -7,6 +7,9 @@ public class InputManager : MonoBehaviour {
     {
 		if (Input.GetKeyDown(KeyCode.Space))
 			Events.Jump();
+
+		/*if (Input.GetButton("Fire1"))
+			Events.Jump();*/
 		
 		if (Input.GetKeyDown(KeyCode.RightArrow))
 			Events.SpeedChange(1);

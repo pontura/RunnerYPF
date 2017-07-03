@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
 		Events.OnLevelComplete ();
 		Events.PoolAllObjects ();
 		yield return new WaitForSeconds (2);
-		Events.RestartAllOver ();
+		//Events.RestartAllOver ();
 		dontAddGenericObjects = false;
 		yield return null;
 	}
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
 		else {
 			Events.GameOver ();
 			yield return new WaitForSeconds (3);
-			Events.RestartAllOver();
+			//Events.RestartAllOver();
 		}
 	}
 }
