@@ -17,6 +17,10 @@ public class Settings : MonoBehaviour
 	public class LevelSettings
 	{
 		public int id;
+		public int colorXModule;
+		public int colorXOffset;
+		public int colorZModule;
+		public int colorZOffset;
 		public Color[] topGeneric;
 		public Color[] bottomGeneric;
 		public Color tile;

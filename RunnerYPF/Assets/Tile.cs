@@ -129,9 +129,10 @@ public class Tile : SceneObject {
 	void Colorize(Settings.LevelSettings levelSettings)
 	{
 		bool tile1 = false;
-		if (Mathf.Floor (transform.position.x) % 2 == 0 && Mathf.Floor (transform.position.z) % 2 == 0)
+		//Debug.Log (transform.position.x+" : "+(Mathf.Floor (transform.position.x-levelSettings.colorXOffset) % levelSettings.colorXModule));
+		if (Mathf.Floor (transform.position.x-levelSettings.colorXOffset) % levelSettings.colorXModule == 0 && Mathf.Floor (transform.position.z-levelSettings.colorZOffset) % levelSettings.colorZModule == 0)
 			tile1 = true;
-		else if (Mathf.Floor (transform.position.x) % 2 !=0 && Mathf.Floor (transform.position.z) % 2 != 0)
+		else if (Mathf.Floor (transform.position.x-levelSettings.colorXOffset) % levelSettings.colorXModule !=0 && Mathf.Floor (transform.position.z-levelSettings.colorZOffset) % levelSettings.colorZModule != 0)
 			tile1 = true;
 
 		if(tile1)
