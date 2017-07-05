@@ -1,6 +1,7 @@
 [
 //other: 1 = river
 //other: 2 = car
+//other: 3 = barrera
 	{
 		level: 1,
 		tiles: [0,1,1,1,1,1,1,1,1,1],
