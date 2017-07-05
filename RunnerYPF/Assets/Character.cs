@@ -46,8 +46,8 @@ public class Character : MonoBehaviour {
 	}
 	void Restart()
 	{
+		print ("Restart");
 		asset.enabled = true;
-		asset.gameObject.SetActive (true);
 		liveSince = 0;
 		state = states.IDLE;
 		sfx.state = state;
