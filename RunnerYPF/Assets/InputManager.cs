@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour {
 
     void Update()
     {
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.LeftControl))
 			Events.Jump();
 
 		/*if (Input.GetButton("Fire1"))

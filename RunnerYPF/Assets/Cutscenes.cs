@@ -37,7 +37,6 @@ public class Cutscenes : MonoBehaviour {
 
 	void GameOver()
 	{
-		print ("Game over");
 		paralaxs.SetActive (false);
 		grids.SetActive (false);
 		pivot.SetActive (false);
@@ -57,7 +56,6 @@ public class Cutscenes : MonoBehaviour {
 		paralaxs.SetActive (true);
 		grids.SetActive (true);
 		pivot.SetActive (true);
-		print ("A");
 		Events.RestartAllOver ();
 		show = false;
 	}

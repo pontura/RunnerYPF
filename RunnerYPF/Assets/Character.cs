@@ -46,7 +46,6 @@ public class Character : MonoBehaviour {
 	}
 	void Restart()
 	{
-		print ("Restart");
 		asset.enabled = true;
 		liveSince = 0;
 		state = states.IDLE;
