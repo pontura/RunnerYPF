@@ -10,7 +10,10 @@ public class Settings : MonoBehaviour
 {
 
 	public String[] levelsPath;
-	public List<LevelData> levels;
+
+	public List<LevelData> level1;
+	public List<LevelData> level2;
+	public List<LevelData> level3;
 
 	public LevelSettings[] levelSettings;
 	[Serializable]
@@ -31,8 +34,11 @@ public class Settings : MonoBehaviour
 	}
 	void Awake()
 	{
-		foreach(String s in levelsPath)
-		LoadDataromServer (LoadResourceTextfile (s));
+		int levelID = 1;
+		foreach (String s in levelsPath) {
+			LoadDataromServer (LoadResourceTextfile (s), levelID);
+			levelID++;
+		}
 	}
 	public static string LoadResourceTextfile(string path)
 	{
@@ -40,15 +46,15 @@ public class Settings : MonoBehaviour
 		TextAsset targetFile = Resources.Load<TextAsset>(filePath);
 		return targetFile.text;
 	}
-	public void LoadDataromServer(string json_data)
+	public void LoadDataromServer(string json_data, int levelID)
 	{
 		JSONNode content = SimpleJSON.JSON.Parse(json_data);
 		for (int a = 0; a < content.Count; a++)
 		{
-			AddLevel(content[a]);
+			AddLevel(content[a], levelID);
 		}
 	}
-	void AddLevel(JSONNode content)
+	void AddLevel(JSONNode content, int levelID)
 	{
 		LevelData data = new LevelData();
 		data.level = int.Parse(content["level"]);
@@ -61,9 +67,24 @@ public class Settings : MonoBehaviour
 		if(content ["other"] != null)
 			data.other = AddData (content ["other"]);	
 		
-		data.energyAssets = AddData (content ["energ"]);	
-		levels.Add(data);
-		ShuffleListTexts (levels);
+		data.energyAssets = AddData (content ["energ"]);
+
+		switch (levelID) {
+			case 1:
+				level1.Add (data);
+				ShuffleListTexts (level1);
+				break;
+			case 2:
+				level2.Add (data);
+				ShuffleListTexts (level2);
+				break;
+			case 3:
+				level3.Add (data);
+				ShuffleListTexts (level3);
+				break;
+		}
+
+
 	}
 	void ShuffleListTexts(List<LevelData> levelData)
 	{

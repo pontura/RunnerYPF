@@ -13,7 +13,22 @@ public class LevelsManager : MonoBehaviour {
 		Events.Restart += Restart;
 		Events.RestartAllOver += RestartAllOver;
 		settings = GetComponent<Settings> ();
-		foreach (LevelData levelData in settings.levels) {
+
+		List<LevelData> levels;
+
+		switch (Data.Instance.playerData.level) {
+			case 1:
+				levels = settings.level1;
+				break;
+			case 2:
+				levels = settings.level2;
+				break;
+			default:
+				levels = settings.level3;
+				break;
+		}
+
+		foreach (LevelData levelData in levels) {
 			AddFreeTiles ();
 			for (int a = 0; a < levelData.tiles.Length; a++) {
 				
