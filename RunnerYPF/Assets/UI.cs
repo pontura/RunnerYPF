@@ -85,8 +85,16 @@ public class UI : MonoBehaviour {
 
 	void SetScore()
 	{
+		scoreField.color = new Color (1f, 0.45f, 0.19f);
 		scoreField.text = score.ToString ();
+		Invoke ("ResetScoreColor", 0.1f);
 	}
+
+	void ResetScoreColor(){
+		scoreField.color = new Color (0.345f, 0.346f, 0.249f);
+	}
+
+
 	void SetLives()
 	{
 		foreach (GameObject go in livesAssets)

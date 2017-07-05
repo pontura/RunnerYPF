@@ -9,13 +9,18 @@ public class CharacterAsset : MonoBehaviour {
 	public Animator anim;
 	public GameObject energyParticles;
 
+	AudioSource source;
+
 	void Start()
 	{
+		source = GetComponent<AudioSource> ();
 		Events.OnGetEnergy += OnGetEnergy;
 	}
 	void OnGetEnergy()
 	{
 		CancelInvoke ();
+		source.pitch = 0.8f + UnityEngine.Random.value * 0.4f;
+		source.PlayOneShot (source.clip);
 		energyParticles.SetActive (true);
 		energyParticles.GetComponentInChildren<ParticleSystem> ().Play ();
 		Invoke ("ResetParticles", 0.5f);
