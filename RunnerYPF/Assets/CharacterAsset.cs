@@ -44,23 +44,23 @@ public class CharacterAsset : MonoBehaviour {
 		if (aceleration == _aceleration)
 			return;
 
-		print ("Run " + _aceleration); 
+		//print ("Run " + _aceleration); 
 		this.aceleration = _aceleration;
 		OnFloor ();
 	}
 	public void Jump()
 	{
-		print ("Jump " );
+		//print ("Jump " );
 		anim.Play ("jump");
 	}
 	public void Hit()
 	{
-		print ("Hit " );
+		//print ("Hit " );
 		anim.Play ("hit");
 	}
 	public void OnFloor()
 	{
-		print ("OnFloor" );
+		//print ("OnFloor" );
 		switch (aceleration) {
 		case 0:
 			anim.CrossFade ("runMid", 0.05f);
@@ -77,5 +77,15 @@ public class CharacterAsset : MonoBehaviour {
 	{
 		Run (-1);
 		anim.CrossFade ("stop", 0.01f);
+		Invoke ("SetKinematic", 1f);
+		Invoke ("TurnOff", 3f);
+	}
+
+	void SetKinematic(){
+		rigidBody.isKinematic = true;
+	}
+
+	void TurnOff(){
+		gameObject.SetActive (false);
 	}
 }

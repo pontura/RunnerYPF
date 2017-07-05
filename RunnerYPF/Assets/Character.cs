@@ -47,6 +47,7 @@ public class Character : MonoBehaviour {
 	void Restart()
 	{
 		asset.enabled = true;
+		asset.gameObject.SetActive (true);
 		liveSince = 0;
 		state = states.IDLE;
 		sfx.state = state;
@@ -149,7 +150,13 @@ public class Character : MonoBehaviour {
 		sfx.state = state;
 		sfx.Stop ();
 		asset.OnFinalDone ();
+		Invoke ("WinSfx", 1.5f);
 	}
+
+	void WinSfx(){
+		sfx.Win ();
+	}
+
 	void Die()
 	{
 		if (state == states.DEAD)

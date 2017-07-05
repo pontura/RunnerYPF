@@ -9,6 +9,7 @@ public class CharacterSfx : MonoBehaviour {
 	public AudioClip jump2;
 	public AudioClip stop;
 	public AudioClip dead;
+	public AudioClip win;
 	public AudioClip restart;
 	public AudioClip fall;
 
@@ -32,10 +33,12 @@ public class CharacterSfx : MonoBehaviour {
 	}
 
 	public void Fall (){
-		source.loop = false;
-		source.clip = fall;
-		source.pitch = 1;
-		source.Play();
+		if (Game.Instance.gameManager.state == GameManager.states.DEAD) {
+			source.loop = false;
+			source.clip = fall;
+			source.pitch = 1;
+			source.Play ();
+		}
 	}
 
 	public void Restart (){
@@ -78,6 +81,13 @@ public class CharacterSfx : MonoBehaviour {
 	public void Die(){
 		source.loop = false;
 		source.clip = dead;
+		source.pitch = 1;
+		source.Play ();
+	}
+
+	public void Win(){
+		source.loop = false;
+		source.clip = win;
 		source.pitch = 1;
 		source.Play ();
 	}
