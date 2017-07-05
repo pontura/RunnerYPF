@@ -14,24 +14,30 @@ public class LevelsManager : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 		settings = GetComponent<Settings> ();
 
+		RestartAllOver ();
+	}
+	void RestartAllOver()
+	{
+		tileID = 0;
+		tilesData.Clear ();
 		List<LevelData> levels;
 
 		switch (Data.Instance.playerData.level) {
-			case 1:
-				levels = settings.level1;
-				break;
-			case 2:
-				levels = settings.level2;
-				break;
-			default:
-				levels = settings.level3;
-				break;
+		case 1:
+			levels = settings.level1;
+			break;
+		case 2:
+			levels = settings.level2;
+			break;
+		default:
+			levels = settings.level3;
+			break;
 		}
 
 		foreach (LevelData levelData in levels) {
 			AddFreeTiles ();
 			for (int a = 0; a < levelData.tiles.Length; a++) {
-				
+
 				TileData tileData = new TileData ();
 
 				if (levelData.other != null && levelData.other [a] == 1)
@@ -42,10 +48,10 @@ public class LevelsManager : MonoBehaviour {
 					tileData.isRiver = false;
 					tileData.obstaclesInLane = TileData.ObstaclesInLane.NONE;
 				}
-				
+
 				if (levelData.final == true && a == 0)
 					tileData.final = true;
-				
+
 				int height = levelData.tiles [a];
 				int energyAssets = levelData.energyAssets [a];
 
@@ -58,10 +64,6 @@ public class LevelsManager : MonoBehaviour {
 				tilesData.Add (tileData);
 			}
 		}
-	}
-	void RestartAllOver()
-	{
-		tileID = 0;
 	}
 	void Restart()
 	{
