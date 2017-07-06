@@ -31,6 +31,17 @@ public class GameManager : MonoBehaviour {
 		realSpeed = speed;
 		Events.StartGame ();
 	}
+
+	void OnDestroy () {
+		Events.SpeedChange += SpeedChange;
+		Events.OnCharacterDie += OnCharacterDie;
+		Events.Restart += Restart;
+		Events.RestartAllOver += Restart;
+		Events.OnFinal += OnFinal;
+		realSpeed = speed;
+		Events.StartGame ();
+	}
+
 	void OnFinal()
 	{
 		StartCoroutine (OnFinalCoroutine ());

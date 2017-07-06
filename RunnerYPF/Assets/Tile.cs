@@ -38,7 +38,6 @@ public class Tile : SceneObject {
 			
 			if (tileData.final == true) {
 				SceneObject so = Data.Instance.pool.AddObjectTo ("Final", transform);
-				Events.OnFinal ();
 			}
 			int height= tileData.height;
 			if (height == 0) {
