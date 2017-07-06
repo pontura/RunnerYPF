@@ -17,6 +17,8 @@ public class Energy : SceneObject {
 		public GameObject itemToBar;
 	}
 	public EnergyAsset[] level1;
+	public EnergyAsset[] level2;
+	public EnergyAsset[] level3;
 
 	EnergyAsset activeAsset;
 
@@ -28,8 +30,31 @@ public class Energy : SceneObject {
 			ea.active.SetActive (false);
 			ea.itemToBar.SetActive (false);
 		}
+
+		foreach (EnergyAsset ea in level2) {
+			ea.active.SetActive (false);
+			ea.itemToBar.SetActive (false);
+		}
+
+		foreach (EnergyAsset ea in level3) {
+			ea.active.SetActive (false);
+			ea.itemToBar.SetActive (false);
+		}
+
+		EnergyAsset[] actualLevel;
+		switch (Data.Instance.playerData.level) {
+		case 1:
+			actualLevel = level1;
+			break;
+		case 2:
+			actualLevel = level2;
+			break;
+		default:
+			actualLevel = level3;
+			break;
+		}
 		
-		activeAsset = level1 [UnityEngine.Random.Range (0, level1.Length)];
+		activeAsset = actualLevel [UnityEngine.Random.Range (0, level1.Length)];
 		activeAsset.active.SetActive (true);
 
 		catched = false;
