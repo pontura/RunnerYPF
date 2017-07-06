@@ -80,7 +80,7 @@ public class GenericObject : SceneObject {
 
 		//level 1
 		if (levelID == 1) {
-			if (laneID == 2) {
+			if (laneID == 3) {
 				AddLinePattern (level1LaneFront2P, level1LaneFront);
 			} else if (laneID == 0) { 
 				AddLinePattern (level1Lane0P, level1Lane0);
