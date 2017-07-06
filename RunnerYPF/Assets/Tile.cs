@@ -58,13 +58,14 @@ public class Tile : SceneObject {
 			if (levelSettings.id == 1) {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
 					if (transform.position.x == 2)
-						AddSceneObjectsEvery (3); // faroles
-					else if (transform.position.x == -3)
-						AddSceneObjectsEvery (30); //estacion
+						AddSceneObjectsEvery (1);
+					else if(transform.position.x == 0)
+						AddSceneObjectsEvery (1);
+					else if(transform.position.x == 2)
+						AddSceneObjectsEvery (1);					
 					else if (transform.position.x == -4)
 						AddSceneObjectsEvery (1); //panel o molino
-					else
-						AddSceneObjectsInRandom (40, 3); //autos
+					
 				}
 			}
 			/////////////level 2
@@ -85,12 +86,12 @@ public class Tile : SceneObject {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
 					if (transform.position.x == 2)
 						AddSceneObjectsEvery (3); // faroles
-					else if (transform.position.x == -3)
-						AddSceneObjectsEvery (30); //estacion
-					else if (transform.position.x == -4)
-						AddSceneObjectsEvery (1); //panel o molino
-					else
+					if (transform.position.x == 0)
 						AddSceneObjectsInRandom (40, 3); //autos
+					else if (transform.position.x == -2)
+						AddSceneObjectsEvery (1); //panel o molino
+					else if (transform.position.x == -4)
+						AddSceneObjectsEvery (1); //panel o molino						
 				}
 			}
 

@@ -32,9 +32,14 @@ public class GenericObject : SceneObject {
 
 	int laneCount=0;
 
-	public Pattern fondoLevel1;
+	public Pattern level1Lane4P;
+	public Pattern level1Lane2P;
+	public Pattern level1Lane0P;
+	public Pattern level1LaneFront2P;
 	public Pattern fondoLevel2;
-	public Pattern fondoLevel3;
+
+	public Pattern level3Lane4P;
+	public Pattern level3Lane2P;
 
 	[Serializable]
 	public class Pattern {
@@ -76,26 +81,21 @@ public class GenericObject : SceneObject {
 		//level 1
 		if (levelID == 1) {
 			if (laneID == 2) {
-				SetRandomOn (level1LaneFront);
-			}/*else if (laneID == -1) { 
-				speed = 2f;
-				SetOn (level1Lane1);
-			}/* else if (laneID == -2) {
-				speed = 1.2f;
-				SetOn (level1Lane2);
-				Invoke ("SetOutOfTile", 1);
-			} /*else if (laneID == -3)
-				SetOn (level1Lane3);*/
-			else if (laneID == -4)
-				AddLinePattern (fondoLevel1,level1Lane4);
-				//AddMolino ();						 
+				AddLinePattern (level1LaneFront2P, level1LaneFront);
+			} else if (laneID == 0) { 
+				AddLinePattern (level1Lane0P, level1Lane0);
+			} else if (laneID == -2) {
+				AddLinePattern (level1Lane2P, level1Lane2);
+			} else if (laneID == -4) {
+				AddLinePattern (level1Lane4P, level1Lane4);
+			}
 		}
 
 		//level 2
 		else if (levelID == 2) {
-			if (laneID == 2)
+			if (laneID == 2) {
 				SetRandomOn (level2LaneFront);
-			else if (laneID == -1) { 
+			} else if (laneID == -1) { 
 				speed = 2f;
 				SetOn (level2Lane1);
 			}/* else if (laneID == -2) {
@@ -104,27 +104,23 @@ public class GenericObject : SceneObject {
 				Invoke ("SetOutOfTile", 1);
 			} /*else if (laneID == -3)
 				SetOn (level2Lane3);*/
-			else if (laneID == -4)
-				AddLinePattern (fondoLevel2,level2Lane4);
-			//AddMolino ();
+			else if (laneID == -4){
+				AddLinePattern (fondoLevel2, level2Lane4);
+			}
 		}
 
 		//level 3
 		else if (levelID == 3) {
-			if (laneID == 2)
+			if (laneID == 2) {
 				SetRandomOn (level3LaneFront);
-			else if (laneID == -1) { 
+			}else if (laneID == 0) { 
 				speed = 2f;
 				SetOn (level3Lane1);
-			}/* else if (laneID == -2) {
-				speed = 1.2f;
-				SetOn (level3Lane2);
-				Invoke ("SetOutOfTile", 1);
-			} /*else if (laneID == -3)
-				SetOn (level3Lane3);*/
-			else if (laneID == -4)
-				AddLinePattern (fondoLevel3,level3Lane4);
-			//AddMolino ();
+			} else if (laneID == -2) {
+				AddLinePattern (level3Lane2P, level3Lane2);
+			} else if (laneID == -4){
+				AddLinePattern (level3Lane4P, level3Lane4);
+			}
 
 		}
 
