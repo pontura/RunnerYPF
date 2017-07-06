@@ -18,13 +18,17 @@ public class Cutscenes : MonoBehaviour {
 		foreach(GameObject cs in cutscenesLose)
 			cs.SetActive (false);
 		Events.GameOver += GameOver;
+
 	//	Events.RestartAllOver += RestartAllOver;
+
 		Events.OnLevelComplete += OnLevelComplete;
 	}
 
 	void OnDestroy(){
 		Events.GameOver -= GameOver;
-	//	Events.RestartAllOver -= RestartAllOver;
+	
+		//	Events.RestartAllOver -= RestartAllOver;
+
 		Events.OnLevelComplete -= OnLevelComplete;
 	}
 
@@ -43,7 +47,7 @@ public class Cutscenes : MonoBehaviour {
 		cutscenesLose [Data.Instance.playerData.level-1].SetActive (true);
 		//cusc.SetActive (true);
 		//acordarse de que el tiempo sea mayor al desaparecimiento del character
-		Invoke("StartShowing", 4);
+		Invoke("StartShowing", 6);
 	}
 	void StartShowing()
 	{

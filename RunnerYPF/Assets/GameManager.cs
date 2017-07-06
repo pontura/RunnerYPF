@@ -33,17 +33,16 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void OnDestroy () {
-		Events.SpeedChange += SpeedChange;
-		Events.OnCharacterDie += OnCharacterDie;
-		Events.Restart += Restart;
-		Events.RestartAllOver += Restart;
-		Events.OnFinal += OnFinal;
-		realSpeed = speed;
-		Events.StartGame ();
+		Events.SpeedChange -= SpeedChange;
+		Events.OnCharacterDie -= OnCharacterDie;
+		Events.Restart -= Restart;
+		Events.RestartAllOver -= Restart;
+		Events.OnFinal -= OnFinal;
 	}
 
 	void OnFinal()
 	{
+		print ("aca");
 		StartCoroutine (OnFinalCoroutine ());
 	}
 	IEnumerator OnFinalCoroutine()
@@ -56,7 +55,10 @@ public class GameManager : MonoBehaviour {
 		Events.OnLevelComplete ();
 		Events.PoolAllObjects ();
 		yield return new WaitForSeconds (2);
+
+		//comentar esta linea con cutscene
 		//Events.RestartAllOver ();
+
 		dontAddGenericObjects = false;
 		yield return null;
 	}

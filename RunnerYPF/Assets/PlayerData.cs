@@ -20,9 +20,13 @@ public class PlayerData : MonoBehaviour {
 		
 	}
 
-	void OnLevelComplete(){
+	void OnLevelComplete(){		
 		level++;
-		if (level > 3)
+		if (level == 2) {
+			level = 3;
+		} else if (level > 3) {
 			level = 1;
+		}
+		print ("level: "+level);
 	}
 }

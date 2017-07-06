@@ -16,7 +16,11 @@ public class EnableByLevel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Events.OnLevelComplete += OnLevelComplete;
+		Events.RestartAllOver += RestartAllOver;
+		SetElements ();
+	}
+
+	void OnEnable(){
 		SetElements ();
 	}
 	
@@ -26,7 +30,7 @@ public class EnableByLevel : MonoBehaviour {
 	}
 
 	void OnDestroy(){
-		Events.OnLevelComplete -= OnLevelComplete;
+		Events.RestartAllOver -= RestartAllOver;
 	}
 
 	void SetElements(){
@@ -34,7 +38,7 @@ public class EnableByLevel : MonoBehaviour {
 			e.element.SetActive (Data.Instance.playerData.level == e.levelId);
 	}
 
-	void OnLevelComplete(){
+	void RestartAllOver(){
 		SetElements ();
 	}
 }

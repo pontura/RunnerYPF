@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Final : SceneObject {
 
+	bool trigged;
+
 	void OnTriggerEnter(Collider other)
 	{
-		Events.OnFinal ();
-		Character character = other.gameObject.GetComponentInParent<Character> ();
-		if (character != null) 
-			character.FinalDone ();		
+		if (!trigged) {			
+			Events.OnFinal ();
+		
+			Character character = other.gameObject.GetComponentInParent<Character> ();
+			if (character != null)
+				character.FinalDone ();		
+				
+			trigged = true;
+		}
 	}
 }
