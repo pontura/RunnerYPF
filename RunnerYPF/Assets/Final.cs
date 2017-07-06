@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class Final : SceneObject {
 
-	bool trigged;
+	public bool trigged;
+
+	// Use this for initialization
+	void Start () {
+		Events.RestartAllOver += RestartAllOver;
+	}
+
+	void OnDestroy(){
+		Events.RestartAllOver -= RestartAllOver;
+	}
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -17,5 +26,9 @@ public class Final : SceneObject {
 				
 			trigged = true;
 		}
+	}
+
+	void RestartAllOver(){
+		trigged = false;
 	}
 }
