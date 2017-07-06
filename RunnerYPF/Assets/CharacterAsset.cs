@@ -83,7 +83,7 @@ public class CharacterAsset : MonoBehaviour {
 		Run (-1);
 		anim.CrossFade ("stop", 0.01f);
 		Invoke ("SetKinematic", 1f);
-		Invoke ("TurnOff", 3f);
+		Invoke ("TurnOff", 2f);
 	}
 
 	void SetKinematic(){
@@ -91,6 +91,6 @@ public class CharacterAsset : MonoBehaviour {
 	}
 
 	void TurnOff(){
-		gameObject.SetActive (false);
+		transform.localPosition = new Vector3 (0, 1000, transform.localPosition.z); 
 	}
 }
