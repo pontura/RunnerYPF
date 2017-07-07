@@ -59,9 +59,7 @@ public class Tile : SceneObject {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
 					if (transform.position.x == 3)
 						AddSceneObjectsEvery (1);
-					else if(transform.position.x == 0)
-						AddSceneObjectsEvery (1);
-					else if(transform.position.x == 2)
+					else if(transform.position.x == -1)
 						AddSceneObjectsEvery (1);					
 					else if (transform.position.x == -4)
 						AddSceneObjectsEvery (1); //panel o molino

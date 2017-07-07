@@ -33,8 +33,7 @@ public class GenericObject : SceneObject {
 	int laneCount=0;
 
 	public Pattern level1Lane4P;
-	public Pattern level1Lane2P;
-	public Pattern level1Lane0P;
+	public Pattern level1Lane1P;
 	public Pattern level1LaneFront2P;
 	public Pattern fondoLevel2;
 
@@ -82,10 +81,8 @@ public class GenericObject : SceneObject {
 		if (levelID == 1) {
 			if (laneID == 3) {
 				AddLinePattern (level1LaneFront2P, level1LaneFront);
-			} else if (laneID == 0) { 
-				AddLinePattern (level1Lane0P, level1Lane0);
-			} else if (laneID == -2) {
-				AddLinePattern (level1Lane2P, level1Lane2);
+			} else if (laneID == -1) {
+				AddLinePattern (level1Lane1P, level1Lane1);
 			} else if (laneID == -4) {
 				AddLinePattern (level1Lane4P, level1Lane4);
 			}

@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour {
 
 	void OnFinal()
 	{
-		print ("aca");
 		StartCoroutine (OnFinalCoroutine ());
 	}
 	IEnumerator OnFinalCoroutine()
