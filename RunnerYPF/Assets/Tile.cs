@@ -57,7 +57,7 @@ public class Tile : SceneObject {
 			/////////////level 1
 			if (levelSettings.id == 1) {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
-					if (transform.position.x == 2)
+					if (transform.position.x == 3)
 						AddSceneObjectsEvery (1);
 					else if(transform.position.x == 0)
 						AddSceneObjectsEvery (1);
