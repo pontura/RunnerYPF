@@ -43,6 +43,7 @@ public class GroundTilesLine : MonoBehaviour {
 			newTile = AddPathTile ();
 
 		newTile.isRiver = data.isRiver;
+		newTile.tileData.finalZone = data.finalZone;
 		tiles.Add (newTile);
 		newTile.transform.localPosition = new Vector3 (_x, 0, 0);
 		newTile.Init (this, levelSettings);

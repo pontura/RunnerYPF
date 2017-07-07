@@ -16,7 +16,9 @@ public class RandomShow : MonoBehaviour {
 
 	void OnEnable(){
 		int r = (int)(Random.value * transform.childCount);
-		for (int i = 0; i < transform.childCount; i++)
-			transform.GetChild (i).gameObject.SetActive (i == r);		
+		for (int i = 0; i < transform.childCount; i++) {
+			transform.GetChild (i).gameObject.SetActive (i == r);
+			transform.GetChild (i).gameObject.GetComponent<SpriteRenderer> ().sortingOrder = 0;
+		}
 	}
 }

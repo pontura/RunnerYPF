@@ -8,6 +8,7 @@ public class TileData {
 	
 	public int height = 1;
 	public bool final;
+	public bool finalZone;
 	public bool isRiver;
 	public ObstaclesInLane obstaclesInLane;
 	public enum ObstaclesInLane

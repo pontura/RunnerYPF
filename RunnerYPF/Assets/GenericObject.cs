@@ -80,11 +80,11 @@ public class GenericObject : SceneObject {
 		//level 1
 		if (levelID == 1) {
 			if (laneID == 3) {
-				AddLinePattern (level1LaneFront2P, level1LaneFront);
+				AddLinePattern (level1LaneFront2P, level1LaneFront,true);
 			} else if (laneID == -1) {
-				AddLinePattern (level1Lane1P, level1Lane1);
+				AddLinePattern (level1Lane1P, level1Lane1,false);
 			} else if (laneID == -4) {
-				AddLinePattern (level1Lane4P, level1Lane4);
+				AddLinePattern (level1Lane4P, level1Lane4,false);
 			}
 		}
 
@@ -102,7 +102,7 @@ public class GenericObject : SceneObject {
 			} /*else if (laneID == -3)
 				SetOn (level2Lane3);*/
 			else if (laneID == -4){
-				AddLinePattern (fondoLevel2, level2Lane4);
+				AddLinePattern (fondoLevel2, level2Lane4,false);
 			}
 		}
 
@@ -114,9 +114,9 @@ public class GenericObject : SceneObject {
 				speed = 2f;
 				SetOn (level3Lane1);
 			} else if (laneID == -2) {
-				AddLinePattern (level3Lane2P, level3Lane2);
+				AddLinePattern (level3Lane2P, level3Lane2,false);
 			} else if (laneID == -4){
-				AddLinePattern (level3Lane4P, level3Lane4);
+				AddLinePattern (level3Lane4P, level3Lane4,false);
 			}
 
 		}
@@ -139,12 +139,25 @@ public class GenericObject : SceneObject {
 		else if(Data.Instance.playerData.level==3)
 			level3Lane4 [UnityEngine.Random.Range (0, level3Lane4.Length)].SetActive (true);
 	}
-	void AddLinePattern(Pattern p, GameObject[] lane)
+	void AddLinePattern(Pattern p, GameObject[] lane, bool isFront=false)
 	{		
 		p.NextModule (laneCount);
-		if(p.ShowSubPattern(laneCount))
-			lane [p.GetModuleCount(laneCount)].SetActive (true);
+		if (p.ShowSubPattern (laneCount)) {
+			lane [p.GetModuleCount (laneCount)].SetActive (true);
+			if (isFront) {
+				SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
+				foreach (SpriteRenderer sr in srs)
+					if(sr.gameObject.activeSelf)
+					sr.sortingOrder = 999;
+			}/* else {
+				SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
+				foreach (SpriteRenderer sr in srs)
+					sr.sortingOrder = 0;
+			}*/
+		}
 	}
+
+
 	void SetOutOfTile()
 	{
 		transform.SetParent (Game.Instance.groundManager.container);
@@ -163,6 +176,7 @@ public class GenericObject : SceneObject {
 			if(go!=null)go.SetActive (false);
 		foreach (GameObject go in level1LaneFront)
 			if(go!=null)go.SetActive (false);
+
 
 		foreach (GameObject go in level2Lane4)
 			if(go!=null)go.SetActive (false);

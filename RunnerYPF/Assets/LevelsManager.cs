@@ -49,8 +49,11 @@ public class LevelsManager : MonoBehaviour {
 					tileData.obstaclesInLane = TileData.ObstaclesInLane.NONE;
 				}
 
-				if (levelData.final == true && a == 0)
+				if (levelData.final == true && a == 2) {
 					tileData.final = true;
+					tileData.finalZone = true;
+				}else if(levelData.final)
+					tileData.finalZone = true;
 
 				int height = levelData.tiles [a];
 				int energyAssets = levelData.energyAssets [a];

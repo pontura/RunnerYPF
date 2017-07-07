@@ -80,7 +80,7 @@ public class CharacterAsset : MonoBehaviour {
 	}
 	public void OnFinalDone()
 	{
-		Run (-1);
+		Run (0);
 		anim.CrossFade ("stop", 0.01f);
 		Invoke ("SetKinematic", 1f);
 		Invoke ("TurnOff", 2f);

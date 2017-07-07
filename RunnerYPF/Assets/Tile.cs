@@ -51,7 +51,7 @@ public class Tile : SceneObject {
 					so.GetComponent<Energy>().Init(tileData.sceneObjectData.height);
 				}
 			}
-		} else {
+		} else if (!tileData.finalZone){
 
 
 			/////////////level 1
