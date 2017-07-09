@@ -17,6 +17,7 @@ public static class Events {
 	public static System.Action OnFinal = delegate { };
 	public static System.Action OnTimeOver = delegate { };
 	public static System.Action OnLevelComplete = delegate { };
+	public static System.Action OnCutsceneComplete = delegate { };
 
 
 }
