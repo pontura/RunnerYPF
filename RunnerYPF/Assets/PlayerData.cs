@@ -21,6 +21,10 @@ public class PlayerData : MonoBehaviour {
 	}
 
 	void OnLevelComplete(){		
+		Invoke ("NextLevel", 0.1f);
+	}
+
+	void NextLevel(){
 		level++;
 		if (level == 2) {
 			level = 3;
