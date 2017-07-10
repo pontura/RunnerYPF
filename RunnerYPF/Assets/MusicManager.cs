@@ -16,6 +16,7 @@ public class MusicManager : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 		Events.OnCutsceneFinal += OnCutsceneFinal;
 		//Events.OnCutsceneComplete += OnCutsceneComplete;
+		Events.GameOver += GameOver;
 	}
 
 	void OnDestroy () {
@@ -23,6 +24,7 @@ public class MusicManager : MonoBehaviour {
 		Events.OnFinal -= OnFinal;
 		//Events.OnCutsceneComplete -= OnCutsceneComplete;
 		Events.OnCutsceneFinal -= OnCutsceneFinal;
+		Events.GameOver -= GameOver;
 	}
 	
 	// Update is called once per frame
@@ -44,6 +46,10 @@ public class MusicManager : MonoBehaviour {
 		music.Stop ();
 		//PlaySoundWithCallback(cutsceneComplete,RestartAllOver);
 		music.PlayOneShot(cutsceneComplete);
+	}
+
+	void GameOver(){
+		music.Stop ();
 	}
 
 	public delegate void AudioCallback();

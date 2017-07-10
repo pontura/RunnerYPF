@@ -44,12 +44,12 @@ public class Cutscenes : MonoBehaviour {
 		RestartAllOver ();
 	}
 
-	/*void Update(){
+	void Update(){
 		if (show) {
 			if (Input.anyKey)
 				RestartAllOver ();
 		}
-	}*/
+	}
 
 	void GameOver()
 	{
@@ -60,12 +60,13 @@ public class Cutscenes : MonoBehaviour {
 		cutscenesLose [cutsceneLevel-1].SetActive (true);
 		//cusc.SetActive (true);
 		//acordarse de que el tiempo sea mayor al desaparecimiento del character
-		//Invoke("StartShowing", 6);
+		//Invoke("StartShowing", 1);
+		show = true;
 	}
-	/*void StartShowing()
+	void StartShowing()
 	{
 		show = true;
-	}*/
+	}
 	void RestartAllOver()
 	{
 		cutscenesLose [cutsceneLevel-1].SetActive (false);
@@ -74,7 +75,7 @@ public class Cutscenes : MonoBehaviour {
 		grids.SetActive (true);
 		pivot.SetActive (true);
 		Events.RestartAllOver ();
-		//show = false;
+		show = false;
 	}
 
 	void OnLevelComplete(){
