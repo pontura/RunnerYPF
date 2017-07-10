@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
 		Events.SpeedChange += SpeedChange;
 		Events.OnCharacterDie += OnCharacterDie;
 		Events.Restart += Restart;
-		Events.RestartAllOver += Restart;
+		Events.RestartAllOver += Ready;
 		Events.OnFinal += OnFinal;
 		realSpeed = speed;
 		Events.StartGame ();
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
 		Events.SpeedChange -= SpeedChange;
 		Events.OnCharacterDie -= OnCharacterDie;
 		Events.Restart -= Restart;
-		Events.RestartAllOver -= Restart;
+		Events.RestartAllOver -= Ready;
 		Events.OnFinal -= OnFinal;
 	}
 
@@ -61,6 +61,13 @@ public class GameManager : MonoBehaviour {
 		dontAddGenericObjects = false;
 		yield return null;
 	}
+
+	void Ready(){
+		Vector3 pos = camera.transform.localPosition;
+		pos.z = 4.5f;		
+		camera.transform.localPosition = pos;
+	}
+
 	void Restart()
 	{
 		state = states.PLAYING;

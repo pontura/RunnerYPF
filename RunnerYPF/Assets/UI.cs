@@ -72,7 +72,7 @@ public class UI : MonoBehaviour {
 
 		if (sec < 1)
 			Events.OnTimeOver ();
-		else
+		else if(Game.Instance.gameManager.state==GameManager.states.PLAYING)
 			sec--;
 
 		timerImage.fillAmount = 1-((float)(totalSec-sec)/(float)totalSec);
