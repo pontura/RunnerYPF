@@ -15,7 +15,14 @@ public class CharacterAsset : MonoBehaviour {
 	{
 		source = GetComponent<AudioSource> ();
 		Events.OnGetEnergy += OnGetEnergy;
+		Events.OnLevelComplete += TurnOff;
 	}
+
+	void OnDestroy () {
+		Events.OnGetEnergy -= OnGetEnergy;
+		Events.OnLevelComplete -= TurnOff;
+	}
+
 	void OnGetEnergy()
 	{
 		CancelInvoke ();
@@ -83,7 +90,7 @@ public class CharacterAsset : MonoBehaviour {
 		Run (0);
 		anim.CrossFade ("stop", 0.01f);
 		Invoke ("SetKinematic", 1f);
-		Invoke ("TurnOff", 2f);
+		//Invoke ("TurnOff", 2f);
 	}
 
 	void SetKinematic(){
