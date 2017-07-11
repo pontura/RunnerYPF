@@ -14,6 +14,7 @@ public class MusicManager : MonoBehaviour {
 
 		Events.OnFinal += OnFinal;
 		Events.RestartAllOver += RestartAllOver;
+		Events.StartGame += StartGame;
 		Events.OnCutsceneFinal += OnCutsceneFinal;
 		//Events.OnCutsceneComplete += OnCutsceneComplete;
 		Events.GameOver += GameOver;
@@ -25,6 +26,7 @@ public class MusicManager : MonoBehaviour {
 		//Events.OnCutsceneComplete -= OnCutsceneComplete;
 		Events.OnCutsceneFinal -= OnCutsceneFinal;
 		Events.GameOver -= GameOver;
+		Events.StartGame -= StartGame;
 	}
 	
 	// Update is called once per frame
@@ -37,7 +39,11 @@ public class MusicManager : MonoBehaviour {
 		music.Play ();
 	}
 
-	void RestartAllOver(){
+	void RestartAllOver(bool newGame){
+		StartGame ();
+	}
+
+	void StartGame(){
 		music.clip = ingame;
 		music.Play ();
 	}

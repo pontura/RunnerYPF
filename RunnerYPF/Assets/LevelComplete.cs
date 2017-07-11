@@ -15,7 +15,7 @@ public class LevelComplete : MonoBehaviour {
 	{
 		panel.SetActive (true);
 	}
-	void RestartAllOver()
+	void RestartAllOver(bool newGame)
 	{
 		panel.SetActive (false);
 	}

@@ -47,7 +47,7 @@ public class UI : MonoBehaviour {
 		SetLives ();
 		SetScore ();
 	}
-	void RestartAllOver()
+	void RestartAllOver(bool newGame)
 	{
 		foreach (GameObject go in livesAssets)
 			go.SetActive (true);

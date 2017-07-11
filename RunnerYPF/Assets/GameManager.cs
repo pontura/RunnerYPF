@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 
 	public enum states
 	{
+		SPLASH,
 		PLAYING,
 		ENDING,
 		READY,
@@ -29,8 +30,9 @@ public class GameManager : MonoBehaviour {
 		Events.RestartAllOver += Ready;
 		Events.LevelStart += LevelStart;
 		Events.OnFinal += OnFinal;
+		Events.StartGame += StartGame;
 		realSpeed = speed;
-		Events.StartGame ();
+		//Events.StartGame ();
 	}
 
 	void OnDestroy () {
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour {
 		Events.RestartAllOver -= Ready;
 		Events.OnFinal -= OnFinal;
 		Events.LevelStart -= LevelStart;
+		Events.StartGame -= StartGame;
+	}
+
+	void StartGame(){
+		state = GameManager.states.READY;
 	}
 
 	void OnFinal()
@@ -64,7 +71,8 @@ public class GameManager : MonoBehaviour {
 		yield return null;
 	}
 
-	void Ready(){
+	void Ready(bool newGame){
+		if(newGame)state = GameManager.states.SPLASH;
 		Vector3 pos = camera.transform.localPosition;
 		pos.z = 4.5f;		
 		camera.transform.localPosition = pos;

@@ -28,7 +28,7 @@ public class Final : SceneObject {
 		}
 	}
 
-	void RestartAllOver(){
+	void RestartAllOver(bool newGame){
 		trigged = false;
 	}
 }

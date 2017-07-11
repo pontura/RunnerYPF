@@ -38,7 +38,7 @@ public class EnableByLevel : MonoBehaviour {
 			e.element.SetActive (Data.Instance.playerData.level == e.levelId);
 	}
 
-	void RestartAllOver(){
+	void RestartAllOver(bool newGame){
 		SetElements ();
 	}
 }

@@ -14,9 +14,9 @@ public class LevelsManager : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 		settings = GetComponent<Settings> ();
 
-		RestartAllOver ();
+		RestartAllOver (true);
 	}
-	void RestartAllOver()
+	void RestartAllOver(bool newGame)
 	{
 		tileID = 0;
 		tilesData.Clear ();

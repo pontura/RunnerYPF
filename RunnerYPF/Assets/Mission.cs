@@ -13,22 +13,28 @@ public class Mission : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
+		/*titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
 		missionText.text = levelMission [Data.Instance.playerData.level - 1];
-		Invoke ("Hide",5f);
+		Invoke ("Hide",5f);*/
 
-		Events.RestartAllOver += Ready;
+		Events.RestartAllOver += RestartAllOver;
+		Events.StartGame += Ready;
 	}
 
 	void OnDestroy(){
-		Events.RestartAllOver += Ready;
+		Events.RestartAllOver -= RestartAllOver;
+		Events.StartGame -= Ready;
+	}
+
+	void RestartAllOver(bool newGame){
+		Ready ();
 	}
 
 	void Ready(){
 		gameObject.SetActive (true);
 		titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
 		missionText.text = levelMission [Data.Instance.playerData.level - 1];
-		Invoke ("Hide",3f);	
+		Invoke ("Hide",2f);	
 	}
 
 	void Hide(){

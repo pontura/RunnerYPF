@@ -13,7 +13,7 @@ public class GroundManager : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 		Restart ();
 	}
-	void RestartAllOver()
+	void RestartAllOver(bool newGame)
 	{
 		Restart ();
 	}

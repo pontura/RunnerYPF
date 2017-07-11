@@ -42,7 +42,7 @@ public class Character : MonoBehaviour {
 		RestartAllOver ();
 	}
 
-	void RestartAllOver()
+	void RestartAllOver(bool newGame=false)
 	{
 		asset.transform.localPosition = new Vector3 (0.7f, 20, 0);
 	}

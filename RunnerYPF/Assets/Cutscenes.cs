@@ -41,13 +41,13 @@ public class Cutscenes : MonoBehaviour {
 	}
 
 	void OnCutsceneComplete(){
-		RestartAllOver ();
+		RestartAllOver (false);
 	}
 
 	void Update(){
 		if (show) {
 			if (Input.anyKey)
-				RestartAllOver ();
+				RestartAllOver (true);
 		}
 	}
 
@@ -67,14 +67,14 @@ public class Cutscenes : MonoBehaviour {
 	{
 		show = true;
 	}
-	void RestartAllOver()
+	void RestartAllOver(bool newGame)
 	{
 		cutscenesLose [cutsceneLevel-1].SetActive (false);
 		cutscenesWin [cutsceneLevel-1].SetActive (false);
 		paralaxs.SetActive (true);
 		grids.SetActive (true);
 		pivot.SetActive (true);
-		Events.RestartAllOver ();
+		Events.RestartAllOver (newGame);
 		show = false;
 	}
 
