@@ -40,7 +40,8 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void RestartAllOver(bool newGame){
-		StartGame ();
+		if(!newGame)
+			StartGame ();
 	}
 
 	void StartGame(){

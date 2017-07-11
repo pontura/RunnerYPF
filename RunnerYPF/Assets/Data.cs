@@ -45,6 +45,7 @@ public class Data : MonoBehaviour
     void Awake()
     {
 		QualitySettings.vSyncCount = 1;
+		Cursor.visible = false;
 
         if (!mInstance)
             mInstance = this;

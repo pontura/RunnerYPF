@@ -15,7 +15,7 @@ public class Splash : MonoBehaviour {
 
 	void RestartAllOver(bool newGame){
 		if(newGame)
-		gameObject.SetActive (true);
+			gameObject.SetActive (true);
 	}
 	
 	void Update(){

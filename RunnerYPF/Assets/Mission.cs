@@ -27,7 +27,8 @@ public class Mission : MonoBehaviour {
 	}
 
 	void RestartAllOver(bool newGame){
-		Ready ();
+		if(!newGame)
+			Ready ();
 	}
 
 	void Ready(){
