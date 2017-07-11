@@ -13,6 +13,7 @@ public static class Events {
 	public static System.Action PoolAllObjects = delegate { };
 	public static System.Action Restart = delegate { };
 	public static System.Action RestartAllOver = delegate { };
+	public static System.Action LevelStart = delegate { };
 	public static System.Action GameOver = delegate { };
 	public static System.Action OnFinal = delegate { };
 	public static System.Action OnTimeOver = delegate { };

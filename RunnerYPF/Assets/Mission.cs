@@ -33,7 +33,7 @@ public class Mission : MonoBehaviour {
 
 	void Hide(){
 		gameObject.SetActive (false);
-		Game.Instance.gameManager.state = GameManager.states.PLAYING;
+		Events.LevelStart ();
 	}
 	
 	// Update is called once per frame

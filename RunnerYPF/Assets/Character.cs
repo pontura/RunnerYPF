@@ -32,18 +32,36 @@ public class Character : MonoBehaviour {
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
 		Events.RestartAllOver += RestartAllOver;
+		Events.LevelStart += LevelStart;
 
 		asset = Instantiate (characterToInstantiate);
 		asset.transform.SetParent (container);
 		asset.transform.localPosition = Vector3.zero;
 		asset.transform.localEulerAngles = Vector3.zero;
 
-		Restart ();
+		RestartAllOver ();
 	}
+
 	void RestartAllOver()
 	{
-		Restart ();
+		asset.transform.localPosition = new Vector3 (0.7f, 20, 0);
 	}
+
+	void LevelStart(){
+		asset.enabled = true;
+		liveSince = 0;
+		state = states.IDLE;
+		sfx.state = state;
+		asset.transform.localPosition = new Vector3 (0.7f, 4, 0);
+		rb = asset.rigidBody;
+		rb.velocity = Vector3.zero;
+		asset.Init (this);
+		Invoke ("DejarCaer", 0.25f);
+		sfx.Restart ();
+		OnFloor ();
+		rb.isKinematic = false;
+	}
+
 	void Restart()
 	{
 		asset.enabled = true;
@@ -66,6 +84,9 @@ public class Character : MonoBehaviour {
 	void OnDestroy () {
 		Events.Jump -= Jump;
 		Events.SpeedChange -= SpeedChange;
+		Events.Restart -= Restart;
+		Events.RestartAllOver -= RestartAllOver;
+		Events.LevelStart -= LevelStart;
 	}
 	public void UpdateZPosition(float _z)
 	{

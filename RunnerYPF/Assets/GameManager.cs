@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour {
 		Events.OnCharacterDie += OnCharacterDie;
 		Events.Restart += Restart;
 		Events.RestartAllOver += Ready;
+		Events.LevelStart += LevelStart;
 		Events.OnFinal += OnFinal;
 		realSpeed = speed;
 		Events.StartGame ();
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour {
 		Events.Restart -= Restart;
 		Events.RestartAllOver -= Ready;
 		Events.OnFinal -= OnFinal;
+		Events.LevelStart -= LevelStart;
 	}
 
 	void OnFinal()
@@ -66,6 +68,10 @@ public class GameManager : MonoBehaviour {
 		Vector3 pos = camera.transform.localPosition;
 		pos.z = 4.5f;		
 		camera.transform.localPosition = pos;
+	}
+
+	void LevelStart(){
+		Game.Instance.gameManager.state = GameManager.states.PLAYING;
 	}
 
 	void Restart()
