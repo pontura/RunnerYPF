@@ -9,15 +9,21 @@ public class PlayerData : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Events.OnLevelComplete += OnLevelComplete;
+		Events.GameOver += GameOver;
 	}
 
 	void OnDestroy(){
 		Events.OnLevelComplete -= OnLevelComplete;
+		Events.GameOver -= GameOver;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void GameOver(){
+			level = 1;
 	}
 
 	void OnLevelComplete(){		

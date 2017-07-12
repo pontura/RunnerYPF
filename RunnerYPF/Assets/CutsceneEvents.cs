@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CutsceneEvents : MonoBehaviour {
 
-	public void OnCutsceneComplete(){
-		Events.OnCutsceneComplete ();
+	public void OnCutsceneComplete(int newGame){
+		Events.OnCutsceneComplete (newGame==1);
 	}
 
 	public void OnCutsceneLastScene(){

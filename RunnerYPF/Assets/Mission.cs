@@ -21,6 +21,10 @@ public class Mission : MonoBehaviour {
 		Events.StartGame += Ready;
 	}
 
+	void OnEnable(){
+		Ready ();
+	}
+
 	void OnDestroy(){
 		Events.RestartAllOver -= RestartAllOver;
 		Events.StartGame -= Ready;
