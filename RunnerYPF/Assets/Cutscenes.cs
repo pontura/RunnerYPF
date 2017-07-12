@@ -45,10 +45,10 @@ public class Cutscenes : MonoBehaviour {
 	}
 
 	void Update(){
-		if (show) {
+		/*if (show) {
 			if (Input.anyKey)
 				RestartAllOver (true);
-		}
+		}*/
 	}
 
 	void GameOver()
@@ -60,9 +60,14 @@ public class Cutscenes : MonoBehaviour {
 		cutscenesLose [cutsceneLevel-1].SetActive (true);
 		//cusc.SetActive (true);
 		//acordarse de que el tiempo sea mayor al desaparecimiento del character
-		//Invoke("StartShowing", 1);
-		show = true;
+		Invoke("NewGame", 4);
+		//show = true;
 	}
+
+	void NewGame(){
+		RestartAllOver (true);
+	}
+
 	void StartShowing()
 	{
 		show = true;

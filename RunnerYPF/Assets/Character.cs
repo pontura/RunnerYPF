@@ -39,10 +39,10 @@ public class Character : MonoBehaviour {
 		asset.transform.localPosition = Vector3.zero;
 		asset.transform.localEulerAngles = Vector3.zero;
 
-		RestartAllOver ();
+		RestartAllOver (true);
 	}
 
-	void RestartAllOver(bool newGame=false)
+	void RestartAllOver(bool newGame)
 	{
 		asset.transform.localPosition = new Vector3 (0.7f, 20, 0);
 	}
