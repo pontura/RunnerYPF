@@ -31,7 +31,7 @@ public class Splash : MonoBehaviour {
 	
 	void Update(){
 		if (Game.Instance.gameManager.state==GameManager.states.SPLASH) {
-			if (Input.anyKey) {
+			if (Input.GetKeyDown(KeyCode.LeftControl)){
 				Events.StartGame ();
 				gameObject.SetActive (false);
 				if (pivot != null)

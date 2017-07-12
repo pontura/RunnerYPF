@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour {
 
-	public AudioClip ingame, cutscene,cutsceneComplete;
+	public AudioClip ingame, cutsceneWin, cutsceneLose,cutsceneComplete;
 
 	AudioSource music;
 
@@ -16,14 +16,14 @@ public class MusicManager : MonoBehaviour {
 		Events.RestartAllOver += RestartAllOver;
 		Events.StartGame += StartGame;
 		Events.OnCutsceneFinal += OnCutsceneFinal;
-		//Events.OnCutsceneComplete += OnCutsceneComplete;
+		Events.OnCutsceneComplete += OnCutsceneComplete;
 		Events.GameOver += GameOver;
 	}
 
 	void OnDestroy () {
 		Events.RestartAllOver -= RestartAllOver;
 		Events.OnFinal -= OnFinal;
-		//Events.OnCutsceneComplete -= OnCutsceneComplete;
+		Events.OnCutsceneComplete -= OnCutsceneComplete;
 		Events.OnCutsceneFinal -= OnCutsceneFinal;
 		Events.GameOver -= GameOver;
 		Events.StartGame -= StartGame;
@@ -35,12 +35,12 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void OnFinal(){
-		music.clip = cutscene;
+		music.clip = cutsceneWin;
 		music.Play ();
 	}
 
 	void RestartAllOver(bool newGame){
-		if(!newGame)
+		//if(!newGame)
 			StartGame ();
 	}
 
@@ -55,8 +55,13 @@ public class MusicManager : MonoBehaviour {
 		music.PlayOneShot(cutsceneComplete);
 	}
 
+	void OnCutsceneComplete(bool newGame){
+		if(newGame)music.Stop ();
+	}
+
 	void GameOver(){
-		music.Stop ();
+		music.clip = cutsceneLose;
+		music.Play ();
 	}
 
 	public delegate void AudioCallback();
