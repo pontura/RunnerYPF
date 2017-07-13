@@ -53,12 +53,18 @@ public class GenericObject : SceneObject {
 		}
 
 		public int GetModuleCount(int laneC){
+			//print (laneC + "-" + offset + "/" + moduleLength + "%" + subPatterns.Length);
 			int result = ((laneC - offset) / moduleLength) % subPatterns.Length;
 			return result;
 		}
 
 		public bool ShowSubPattern(int laneC){
-			return ((laneC%moduleLength) - currentSubP.offset)% currentSubP.moduleLength == 0;
+			//print (laneC + "%" + moduleLength + "%" + currentSubP.moduleLength+"="+((laneC%moduleLength)%currentSubP.moduleLength));
+			bool result = false;
+			if ((laneC % moduleLength) > currentSubP.offset) {
+				result = ((laneC % moduleLength) % currentSubP.moduleLength) == 0;;
+			}
+			return result;
 		}
 	}
 
@@ -143,17 +149,19 @@ public class GenericObject : SceneObject {
 	{		
 		p.NextModule (laneCount);
 		if (p.ShowSubPattern (laneCount)) {
-			lane [p.GetModuleCount (laneCount)].SetActive (true);
-			if (isFront) {
-				SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
-				foreach (SpriteRenderer sr in srs)
-					if(sr.gameObject.activeSelf)
-					sr.sortingOrder = 999;
-			}/* else {
-				SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
-				foreach (SpriteRenderer sr in srs)
-					sr.sortingOrder = 0;
-			}*/
+			if (lane [p.GetModuleCount (laneCount)] != null) {
+				lane [p.GetModuleCount (laneCount)].SetActive (true);
+				if (isFront) {
+					SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
+					foreach (SpriteRenderer sr in srs)
+						if (sr.gameObject.activeSelf)
+							sr.sortingOrder = 999;
+				}/* else {
+					SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
+					foreach (SpriteRenderer sr in srs)
+						sr.sortingOrder = 0;
+				}*/
+			}
 		}
 	}
 
