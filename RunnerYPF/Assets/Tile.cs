@@ -43,14 +43,20 @@ public class Tile : SceneObject {
 			if (height == 0) {
 				isHole = true;
 			}
-			else {
+			//else {
 				asset.gameObject.SetActive (true);
 				asset.transform.localPosition = new Vector3 (0, height-1, 0);
 				if (tileData.sceneObjectData != null) {
 					SceneObject so = Data.Instance.pool.AddObjectTo ("Energy", container);
-					so.GetComponent<Energy>().Init(tileData.sceneObjectData.height);
+					bool isPowerUp = false;
+					print (tileData.sceneObjectData.type);
+					if (tileData.sceneObjectData.type == SceneObjectData.types.POWERUP) {
+						isPowerUp = true;
+						print ("POWER" + isPowerUp);
+					}
+					so.GetComponent<Energy>().Init(tileData.sceneObjectData.height, isPowerUp);
 				}
-			}
+			//}
 		} else if (!tileData.finalZone){
 
 

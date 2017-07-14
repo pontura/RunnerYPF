@@ -40,6 +40,10 @@ public class LevelsManager : MonoBehaviour {
 
 				TileData tileData = new TileData ();
 
+				int powerUp = 0;
+				if (levelData.powerUp != null && levelData.powerUp [a] !=0)
+					powerUp = levelData.powerUp[a];
+				
 				if (levelData.other != null && levelData.other [a] == 1)
 					tileData.isRiver = true;
 				else if (levelData.other != null && levelData.other [a] == 2)
@@ -59,6 +63,11 @@ public class LevelsManager : MonoBehaviour {
 				int energyAssets = levelData.energyAssets [a];
 
 				tileData.height = height;
+				if (powerUp != 0) {
+					tileData.sceneObjectData = new SceneObjectData ();
+					tileData.sceneObjectData.type = SceneObjectData.types.POWERUP;
+					tileData.sceneObjectData.height = powerUp;
+				} else
 				if (energyAssets != 0) {
 					tileData.sceneObjectData = new SceneObjectData ();
 					tileData.sceneObjectData.type = SceneObjectData.types.ENERGY;

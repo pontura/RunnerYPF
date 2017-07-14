@@ -5,6 +5,7 @@
 	public enum types
 	{
 		ENERGY,
-		OBSTACLE
+		OBSTACLE,
+		POWERUP
 	}
 }

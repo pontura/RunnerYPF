@@ -8,6 +8,7 @@ public class CharacterAsset : MonoBehaviour {
 	private Character character;
 	public Animator anim;
 	public GameObject energyParticles;
+	public GameObject powerupFX;
 
 	AudioSource source;
 
@@ -16,13 +17,18 @@ public class CharacterAsset : MonoBehaviour {
 		source = GetComponent<AudioSource> ();
 		Events.OnGetEnergy += OnGetEnergy;
 		Events.OnLevelComplete += TurnOff;
+		Events.OnPowerUp += OnPowerUp;
 	}
 
 	void OnDestroy () {
 		Events.OnGetEnergy -= OnGetEnergy;
 		Events.OnLevelComplete -= TurnOff;
+		Events.OnPowerUp -= OnPowerUp;
 	}
-
+	void OnPowerUp(bool isOn)
+	{
+		powerupFX.SetActive (isOn);
+	}
 	void OnGetEnergy()
 	{
 		CancelInvoke ();
@@ -38,6 +44,7 @@ public class CharacterAsset : MonoBehaviour {
 	}
 	public void Init(Character _character)
 	{
+		OnPowerUp (false);
 		this.character = _character;
 	}
 	void OnCollisionEnter(Collision  other)

@@ -9,6 +9,7 @@ public static class Events {
 	public static System.Action OnCharacterDie = delegate { };
 	public static System.Action Jump = delegate { };
 	public static System.Action OnGetEnergy = delegate { };
+	public static System.Action<bool> OnPowerUp = delegate { };
 	public static System.Action<int> SpeedChange = delegate { };
 	public static System.Action PoolAllObjects = delegate { };
 	public static System.Action Restart = delegate { };

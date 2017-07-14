@@ -67,6 +67,9 @@ public class Settings : MonoBehaviour
 		if(content ["other"] != null)
 			data.other = AddData (content ["other"]);	
 		
+		if(content ["powUp"] != null)
+			data.powerUp = AddData (content ["powUp"]);	
+		
 		data.energyAssets = AddData (content ["energ"]);
 
 		switch (levelID) {

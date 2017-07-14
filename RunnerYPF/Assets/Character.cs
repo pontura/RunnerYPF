@@ -13,6 +13,7 @@ public class Character : MonoBehaviour {
 	public Transform container;
 
 	CharacterSfx sfx;
+	public bool inPowerUp;
 
 	public enum states
 	{
@@ -28,6 +29,7 @@ public class Character : MonoBehaviour {
 
 		sfx = GetComponent<CharacterSfx> ();
 
+		Events.OnPowerUp += OnPowerUp;
 		Events.Jump += Jump;
 		Events.SpeedChange += SpeedChange;
 		Events.Restart += Restart;
@@ -80,8 +82,20 @@ public class Character : MonoBehaviour {
 	void DejarCaer(){
 		rb.isKinematic = false;
 	}
-
+	void OnPowerUp(bool isOn)
+	{
+		if (isOn) {
+			inPowerUp = true;
+			Invoke ("ResetPowerUp", 3);
+		}
+	}
+	void ResetPowerUp()
+	{
+		Events.OnPowerUp (false);
+		inPowerUp = false;
+	}
 	void OnDestroy () {
+		Events.OnPowerUp -= OnPowerUp;
 		Events.Jump -= Jump;
 		Events.SpeedChange -= SpeedChange;
 		Events.Restart -= Restart;

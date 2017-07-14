@@ -6,6 +6,7 @@ using System;
 public class Energy : SceneObject {
 
 	bool catched;
+	bool catchedByPowerUp;
 
 	AudioSource source;
 
@@ -15,15 +16,41 @@ public class Energy : SceneObject {
 	{
 		public GameObject active;
 		public GameObject itemToBar;
+		public bool isPowerUp;
 	}
 	public EnergyAsset[] level1;
 	public EnergyAsset[] level2;
 	public EnergyAsset[] level3;
 
+	public bool isPowerUP;
+
 	EnergyAsset activeAsset;
 
-	public void Init(int _y)
+	public Vector3 colliderScale;
+
+	void Start()
 	{
+		Events.OnPowerUp += OnPowerUp;
+	}
+	void OnDestroy()
+	{
+		Events.OnPowerUp -= OnPowerUp;
+	}
+	void OnPowerUp(bool isOn)
+	{
+		if (isOn) {
+			Vector3 scale = GetComponent<BoxCollider> ().size;
+			scale.y *= 6;
+			GetComponent<BoxCollider> ().size = scale;
+		} else {
+			GetComponent<BoxCollider> ().size = colliderScale;
+		}
+	}
+	public void Init(int _y, bool _isPowerUP)
+	{
+		CancelInvoke ();
+		OnPowerUp (false);
+		isPowerUP = _isPowerUP;
 		source = GetComponent<AudioSource> ();
 
 		foreach (EnergyAsset ea in level1) {
@@ -53,16 +80,30 @@ public class Energy : SceneObject {
 			actualLevel = level3;
 			break;
 		}
+		if(isPowerUP)
+			activeAsset = actualLevel [UnityEngine.Random.Range (0, level1.Length)];
+		else
+			activeAsset = GetRayo(actualLevel);
 		
-		activeAsset = actualLevel [UnityEngine.Random.Range (0, level1.Length)];
 		activeAsset.active.SetActive (true);
 
+		catchedByPowerUp = false;
 		catched = false;
+
 		Vector3 pos = transform.localPosition;
 		pos.y = _y;
 		transform.localPosition = pos;
 		transform.localScale = Vector3.one;
 	}
+	EnergyAsset GetRayo(EnergyAsset[] actualLevel)
+	{
+		foreach (EnergyAsset ea in actualLevel) {
+			if (!ea.isPowerUp)
+				return ea;
+		}
+		return null;
+	}
+
 	void OnTriggerEnter(Collider other)
 	{
 		character = other.gameObject.GetComponentInParent<Character> ();
@@ -73,28 +114,50 @@ public class Energy : SceneObject {
 			activeAsset.active.SetActive (false);
 			activeAsset.itemToBar.SetActive (true);
 
-			Events.OnGetEnergy ();
-			catched = true;
-			//Invoke ("Done", 0.25f);
-			Invoke ("Done", 2f);
+			if (isPowerUP)
+				Events.OnPowerUp (true);
+
+			if (!isPowerUP && character.inPowerUp) {
+				catchedByPowerUp = true;
+				Invoke ("ResetPowerUpCatched", 0.3f);
+			} else {
+				catched = true;
+				Events.OnGetEnergy ();
+				Invoke ("Done", 2f);
+			}
+
 		}
 	}
-
+	void ResetPowerUpCatched()
+	{
+		catchedByPowerUp = false;
+		catched = true;
+		Events.OnGetEnergy ();
+		Invoke ("Done", 2f);
+	}
 	Vector3 dest;
 	void Update()
-	{		
-		if (catched) {
+	{	
+		if (catchedByPowerUp) {
+			dest = character.transform.position;
+			dest.y -= 2;
+			dest.z += 2;
+			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime*4f);
+		}	
+		else if (catched) {
 			transform.SetParent (Game.Instance.gameManager.camera.transform);
 			dest = transform.position;
 			dest.z += 18;
 			dest.y = 10;
 			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime*3);
-			//transform.localScale *= 1.01f;
 		}
 	}
 	void Done()
 	{
+		isPowerUP = false;
+		catchedByPowerUp = false;
 		catched = false;
 		Poolme ();
+		CancelInvoke ();
 	}
 }
