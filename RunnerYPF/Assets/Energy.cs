@@ -81,7 +81,7 @@ public class Energy : SceneObject {
 			break;
 		}
 		if(isPowerUP)
-			activeAsset = actualLevel [UnityEngine.Random.Range (0, level1.Length)];
+			activeAsset = GetPowerUp(actualLevel);
 		else
 			activeAsset = GetRayo(actualLevel);
 		
@@ -102,6 +102,14 @@ public class Energy : SceneObject {
 				return ea;
 		}
 		return null;
+	}
+
+	EnergyAsset GetPowerUp(EnergyAsset[] actualLevel)
+	{
+		EnergyAsset ea = actualLevel [UnityEngine.Random.Range (0, level1.Length - 1)];
+		if (ea.isPowerUp)
+			return ea;
+		else  return GetPowerUp(actualLevel);
 	}
 
 	void OnTriggerEnter(Collider other)
