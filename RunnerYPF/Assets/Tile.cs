@@ -49,10 +49,10 @@ public class Tile : SceneObject {
 				if (tileData.sceneObjectData != null) {
 					SceneObject so = Data.Instance.pool.AddObjectTo ("Energy", container);
 					bool isPowerUp = false;
-					print (tileData.sceneObjectData.type);
+					//print (tileData.sceneObjectData.type);
 					if (tileData.sceneObjectData.type == SceneObjectData.types.POWERUP) {
 						isPowerUp = true;
-						print ("POWER" + isPowerUp);
+						//print ("POWER" + isPowerUp);
 					}
 					so.GetComponent<Energy>().Init(tileData.sceneObjectData.height, isPowerUp);
 				}
