@@ -5,6 +5,7 @@ using UnityEngine;
 public class TileAsset : MonoBehaviour {
 
 	public GameObject river;
+	public GameObject rail;
 	public Tile tile;
 	private Collider collider;
 	public bool isHole;
@@ -13,7 +14,11 @@ public class TileAsset : MonoBehaviour {
 	{
 		this.isHole = isHole;
 		if (isRiver) {
-			river.SetActive (true);
+			if(Data.Instance.playerData.level==1)
+				river.SetActive (true);
+			else if(Data.Instance.playerData.level==2)
+				rail.SetActive (true);
+				
 			gameObject.SetActive (false);
 		} else {
 			river.SetActive (false);
