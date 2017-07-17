@@ -22,6 +22,7 @@ public class TileAsset : MonoBehaviour {
 			gameObject.SetActive (false);
 		} else {
 			river.SetActive (false);
+			rail.SetActive (false);
 			gameObject.SetActive (true);
 		}
 		collider = GetComponent<Collider> ();
