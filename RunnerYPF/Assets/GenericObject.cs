@@ -99,10 +99,10 @@ public class GenericObject : SceneObject {
 		//level 2
 		else if (levelID == 2) {
 			if (laneID == 2) {
-				SetRandomOn (level2LaneFront);
+				AddLinePattern (level2Lane1P, level2LaneFront,false,0.2f);
 			}else if (laneID == 1){
 				SetOn (level2Lane0);
-			}else if (laneID == -1){
+			}else if (laneID == -2){
 				AddLinePattern (level2Lane1P, level2Lane1,false,0.2f);
 			}else if (laneID == -4){
 				AddLinePattern (level2Lane4P, level2Lane4,false);

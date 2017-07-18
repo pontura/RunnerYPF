@@ -80,8 +80,8 @@ public class Tile : SceneObject {
 			else if (levelSettings.id == 2) {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
 					if (transform.position.x == 2)
-						AddSceneObjectsEvery (3); // faroles
-					else if (transform.position.x == -1)
+						AddSceneObjectsEvery (1); // faroles
+					else if (transform.position.x == -2)
 						AddSceneObjectsEvery (1); //carbon
 					else if (transform.position.x == -4)
 						AddSceneObjectsEvery (1); //fabrica
