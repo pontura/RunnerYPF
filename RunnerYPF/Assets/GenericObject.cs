@@ -35,7 +35,9 @@ public class GenericObject : SceneObject {
 	public Pattern level1Lane4P;
 	public Pattern level1Lane1P;
 	public Pattern level1LaneFront2P;
-	public Pattern fondoLevel2;
+
+	public Pattern level2Lane4P;
+	public Pattern level2Lane1P;
 
 	public Pattern level3Lane4P;
 	public Pattern level3Lane2P;
@@ -98,17 +100,12 @@ public class GenericObject : SceneObject {
 		else if (levelID == 2) {
 			if (laneID == 2) {
 				SetRandomOn (level2LaneFront);
-			} else if (laneID == -1) { 
-				speed = 2f;
-				SetOn (level2Lane1);
-			}/* else if (laneID == -2) {
-				speed = 1.2f;
-				SetOn (level2Lane2);
-				Invoke ("SetOutOfTile", 1);
-			} /*else if (laneID == -3)
-				SetOn (level2Lane3);*/
-			else if (laneID == -4){
-				AddLinePattern (fondoLevel2, level2Lane4,false);
+			}else if (laneID == 1){
+				SetOn (level2Lane0);
+			}else if (laneID == -1){
+				AddLinePattern (level2Lane1P, level2Lane1,false,0.2f);
+			}else if (laneID == -4){
+				AddLinePattern (level2Lane4P, level2Lane4,false);
 			}
 		}
 
@@ -145,22 +142,25 @@ public class GenericObject : SceneObject {
 		else if(Data.Instance.playerData.level==3)
 			level3Lane4 [UnityEngine.Random.Range (0, level3Lane4.Length)].SetActive (true);
 	}
-	void AddLinePattern(Pattern p, GameObject[] lane, bool isFront=false)
+
+	void AddLinePattern(Pattern p, GameObject[] lane, bool isFront=false, float prob=1f )
 	{		
 		p.NextModule (laneCount);
 		if (p.ShowSubPattern (laneCount)) {
-			if (lane [p.GetModuleCount (laneCount)] != null) {
-				lane [p.GetModuleCount (laneCount)].SetActive (true);
-				if (isFront) {
-					SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
-					foreach (SpriteRenderer sr in srs)
-						if (sr.gameObject.activeSelf)
-							sr.sortingOrder = 999;
-				}/* else {
+			if (prob > UnityEngine.Random.value) {
+				if (lane [p.GetModuleCount (laneCount)] != null) {
+					lane [p.GetModuleCount (laneCount)].SetActive (true);
+					if (isFront) {
+						SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
+						foreach (SpriteRenderer sr in srs)
+							if (sr.gameObject.activeSelf)
+								sr.sortingOrder = 999;
+					}/* else {
 					SpriteRenderer[] srs = lane [p.GetModuleCount (laneCount)].GetComponentsInChildren<SpriteRenderer> ();
 					foreach (SpriteRenderer sr in srs)
 						sr.sortingOrder = 0;
 				}*/
+				}
 			}
 		}
 	}

@@ -25,6 +25,9 @@ public class Tile : SceneObject {
 				SceneObject so = Data.Instance.pool.AddObjectTo ("CarForward", container);
 				so.GetComponent<MoveSceneObject> ().Init ();
 			}
+			if (tileData.isRiver && Data.Instance.playerData.level == 2) {
+				AddSceneObjectsEvery (1);
+			}
 		} else {
 			Colorize (levelSettings);
 		}
@@ -39,6 +42,7 @@ public class Tile : SceneObject {
 			if (tileData.final == true) {
 				SceneObject so = Data.Instance.pool.AddObjectTo ("Final", transform);
 			}
+
 			int height= tileData.height;
 			if (height == 0) {
 				isHole = true;
@@ -77,12 +81,13 @@ public class Tile : SceneObject {
 				if (!Game.Instance.gameManager.dontAddGenericObjects) {
 					if (transform.position.x == 2)
 						AddSceneObjectsEvery (3); // faroles
-					else if (transform.position.x == -3)
-						AddSceneObjectsEvery (30); //estacion
+					else if (transform.position.x == -1)
+						AddSceneObjectsEvery (1); //carbon
 					else if (transform.position.x == -4)
-						AddSceneObjectsEvery (1); //panel o molino
-					else
-						AddSceneObjectsInRandom (40, 3); //autos
+						AddSceneObjectsEvery (1); //fabrica
+					
+					//else						
+						
 				}
 			}
 			/////////////level 3
