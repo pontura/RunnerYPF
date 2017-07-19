@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Mission : MonoBehaviour {
 
+	public GameObject ui;
 	public GameObject[] levelSign;
 	public string[] levelTitle;
 	public string[] levelMission;
@@ -22,7 +23,7 @@ public class Mission : MonoBehaviour {
 		Events.StartGame += Ready;
 	}
 
-	void OnEnable(){
+	void OnEnable(){		
 		Ready ();
 	}
 
@@ -37,6 +38,7 @@ public class Mission : MonoBehaviour {
 	}
 
 	void Ready(){
+		ui.SetActive (false);
 		gameObject.SetActive (true);
 		//titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
 		//missionText.text = levelMission [Data.Instance.playerData.level - 1];
@@ -47,6 +49,7 @@ public class Mission : MonoBehaviour {
 	void Hide(){
 		levelSign[Data.Instance.playerData.level - 1].SetActive(false);
 		gameObject.SetActive (false);
+		ui.SetActive (true);
 		Events.LevelStart ();
 	}
 	

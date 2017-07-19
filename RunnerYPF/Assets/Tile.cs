@@ -83,6 +83,8 @@ public class Tile : SceneObject {
 						AddSceneObjectsEvery (1); // faroles
 					else if (transform.position.x == -2)
 						AddSceneObjectsEvery (1); //carbon
+					else if (transform.position.x == -3)
+						AddSceneObjectsEvery (1); //fabrica
 					else if (transform.position.x == -4)
 						AddSceneObjectsEvery (1); //fabrica
 					
