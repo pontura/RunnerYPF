@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour {
 
-	public AudioClip ingame, cutsceneWin, cutsceneLose,cutsceneComplete;
+	public AudioClip ingame, cutsceneWin, cutsceneLose,cutsceneComplete,splash;
 
 	AudioSource music;
 
@@ -40,7 +40,11 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void RestartAllOver(bool newGame){
-		//if(!newGame)
+		print ("aca");
+		if (newGame) {
+			music.clip = splash;
+			music.Play ();
+		}else
 			StartGame ();
 	}
 
@@ -56,7 +60,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void OnCutsceneComplete(bool newGame){
-		if(newGame)music.Stop ();
+		//if(newGame)music.Stop ();
 	}
 
 	void GameOver(){
