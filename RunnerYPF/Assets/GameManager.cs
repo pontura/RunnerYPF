@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour {
 
 		//comentar esta linea con cutscene
 		//Events.RestartAllOver ();
-
 		dontAddGenericObjects = false;
 		yield return null;
 	}
