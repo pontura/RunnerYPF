@@ -40,7 +40,7 @@ public class Energy : SceneObject {
 	{
 		if (isOn && !isPowerUP) {
 			Vector3 scale = colliderScale;
-			scale.y *= 6;
+			scale.y *= 24;
 			scale.z *= 3;
 			GetComponent<BoxCollider> ().size = scale;
 		} else {
