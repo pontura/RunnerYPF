@@ -40,7 +40,6 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	void RestartAllOver(bool newGame){
-		print ("aca");
 		if (newGame) {
 			music.clip = splash;
 			music.Play ();

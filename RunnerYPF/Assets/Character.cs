@@ -86,12 +86,14 @@ public class Character : MonoBehaviour {
 	{
 		if (isOn) {
 			inPowerUp = true;
+			Data.Instance.isPowerUpOn = true;
 			Invoke ("ResetPowerUp", 3);
 		}
 	}
 	void ResetPowerUp()
 	{
 		Events.OnPowerUp (false);
+		Data.Instance.isPowerUpOn = false;
 		inPowerUp = false;
 	}
 	void OnDestroy () {

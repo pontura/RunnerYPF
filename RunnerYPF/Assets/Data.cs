@@ -19,6 +19,9 @@ public class Data : MonoBehaviour
 	public LevelsManager levelsManager;
 	public Settings settings;
 	public PlayerData playerData;
+
+	public bool isPowerUpOn;
+
     public static Data Instance
     {
         get

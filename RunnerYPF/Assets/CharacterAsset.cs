@@ -6,7 +6,7 @@ public class CharacterAsset : MonoBehaviour {
 
 	public Rigidbody rigidBody;
 	private Character character;
-	public Animator anim;
+	public Animator[] anim;
 	public GameObject energyParticles;
 	public GameObject powerupFX;
 
@@ -70,32 +70,32 @@ public class CharacterAsset : MonoBehaviour {
 	public void Jump()
 	{
 		//print ("Jump " );
-		anim.Play ("jump");
+		anim[Data.Instance.playerData.level-1].Play ("jump");
 	}
 	public void Hit()
 	{
 		//print ("Hit " );
-		anim.Play ("hit");
+		anim[Data.Instance.playerData.level-1].Play ("hit");
 	}
 	public void OnFloor()
 	{
 		//print ("OnFloor" );
 		switch (aceleration) {
 		case 0:
-			anim.CrossFade ("runMid", 0.05f);
+			anim[Data.Instance.playerData.level-1].CrossFade ("runMid", 0.05f);
 			break;
 		case 1:
-			anim.CrossFade ("runHigh", 0.05f);
+			anim[Data.Instance.playerData.level-1].CrossFade ("runHigh", 0.05f);
 			break;
 		case -1:
-			anim.CrossFade ("runLow", 0.05f);
+			anim[Data.Instance.playerData.level-1].CrossFade ("runLow", 0.05f);
 			break;
 		}
 	}
 	public void OnFinalDone()
 	{
 		Run (0);
-		anim.CrossFade ("stop", 0.01f);
+		anim[Data.Instance.playerData.level-1].CrossFade ("stop", 0.01f);
 		Invoke ("SetKinematic", 1f);
 		//Invoke ("TurnOff", 2f);
 	}

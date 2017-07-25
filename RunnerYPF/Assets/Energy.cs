@@ -38,18 +38,20 @@ public class Energy : SceneObject {
 	}
 	void OnPowerUp(bool isOn)
 	{
-		if (isOn) {
+		if (isOn && !isPowerUP) {
 			Vector3 scale = GetComponent<BoxCollider> ().size;
 			scale.y *= 6;
+			scale.z *= 3;
 			GetComponent<BoxCollider> ().size = scale;
 		} else {
 			GetComponent<BoxCollider> ().size = colliderScale;
 		}
 	}
+
 	public void Init(int _y, bool _isPowerUP)
 	{
 		CancelInvoke ();
-		OnPowerUp (false);
+		OnPowerUp (Data.Instance.isPowerUpOn);
 		isPowerUP = _isPowerUP;
 		source = GetComponent<AudioSource> ();
 
