@@ -43,7 +43,7 @@ public class Mission : MonoBehaviour {
 		//titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
 		//missionText.text = levelMission [Data.Instance.playerData.level - 1];
 		levelSign[Data.Instance.playerData.level - 1].SetActive(true);
-		Invoke ("Hide",7f);	
+		Invoke ("Hide",11f);	
 	}
 
 	void Hide(){

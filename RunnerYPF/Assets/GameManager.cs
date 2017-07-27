@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
 		Events.LevelStart += LevelStart;
 		Events.OnFinal += OnFinal;
 		Events.StartGame += StartGame;
+		Events.OnTimeOver += OnTimeOver;
 		realSpeed = speed;
 		//Events.StartGame ();
 	}
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour {
 		Events.OnFinal -= OnFinal;
 		Events.LevelStart -= LevelStart;
 		Events.StartGame -= StartGame;
+		Events.OnTimeOver -= OnTimeOver;
 	}
 
 	void StartGame(){
@@ -127,6 +129,23 @@ public class GameManager : MonoBehaviour {
 			Events.GameOver ();
 			yield return new WaitForSeconds (3);
 			//Events.RestartAllOver();
+		}
+	}
+	void OnTimeOver()
+	{
+		if (state == states.PLAYING) {
+			state = states.DEAD;
+			UI.Instance.lives = 0;
+			StartCoroutine (OnTimeOverRoutine ());
+		}
+	}
+	IEnumerator OnTimeOverRoutine()
+	{
+		yield return new WaitForSeconds (1);
+		if (state == states.DEAD) {
+			Events.PoolAllObjects ();
+			yield return new WaitForSeconds (2);
+			Events.GameOver ();
 		}
 	}
 }

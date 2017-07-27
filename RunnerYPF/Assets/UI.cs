@@ -9,7 +9,7 @@ public class UI : MonoBehaviour {
 	public Text timerField;
 
 	public int score;
-	private int totalSec = 59;
+	private int totalSec = 50;
 	public int sec;
 	public int lives;
 	public static UI Instance;
@@ -21,6 +21,7 @@ public class UI : MonoBehaviour {
 
 	void Awake () {
 		Instance = this;
+		Events.OnPowerUp += OnPowerUp;
 		Events.OnGetEnergy += OnGetEnergy;
 		Events.RestartAllOver += RestartAllOver;
 		Events.StartGame += StartGame;
@@ -106,5 +107,11 @@ public class UI : MonoBehaviour {
 			livesAssets [1].SetActive (true);
 		if(lives>2)
 			livesAssets [2].SetActive (true);
+	}
+
+	void OnPowerUp(bool isOn)
+	{
+		if(isOn)
+			sec += 3;
 	}
 }
