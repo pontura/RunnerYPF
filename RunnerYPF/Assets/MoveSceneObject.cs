@@ -12,6 +12,7 @@ public class MoveSceneObject : SceneObject {
 		Vector3 pos = transform.localPosition;
 		pos.z = 0;
 		transform.localPosition = pos;
+		GetComponentInChildren<SpriteRenderer> ().sortingOrder = 10;
 	}
 	void Update()
 	{
