@@ -23,6 +23,7 @@ public class Energy : SceneObject {
 	public EnergyAsset[] level3;
 
 	public bool isPowerUP;
+	public AudioClip timePUpSfx;
 
 	EnergyAsset activeAsset;
 
@@ -118,14 +119,19 @@ public class Energy : SceneObject {
 	{
 		character = other.gameObject.GetComponentInParent<Character> ();
 		if (character != null) {
-			source.pitch = 0.7937f * Mathf.Pow(1.122462f,(int)(UnityEngine.Random.value * 3));
-			source.PlayOneShot (source.clip);
+			
 
 			activeAsset.active.SetActive (false);
 			activeAsset.itemToBar.SetActive (true);
 
-			if (isPowerUP)
+			if (isPowerUP) {
+				source.pitch = 1f;
+				source.PlayOneShot (timePUpSfx);
 				Events.OnPowerUp (true);
+			} else {
+				source.pitch = 0.7937f * Mathf.Pow(1.122462f,(int)(UnityEngine.Random.value * 3));
+				source.PlayOneShot (source.clip);
+			}
 
 			if (!isPowerUP && character.inPowerUp) {
 				catchedByPowerUp = true;
