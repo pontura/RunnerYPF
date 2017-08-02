@@ -79,7 +79,7 @@ public class Settings : MonoBehaviour
 				break;
 			case 2:
 				level2.Add (data);
-				ShuffleListTexts (level2);
+				//ShuffleListTexts (level2);
 				break;
 			case 3:
 				level3.Add (data);
