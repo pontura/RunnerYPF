@@ -9,23 +9,31 @@ public class UI : MonoBehaviour {
 	public Text timerField;
 
 	public int score;
-	private int totalSec = 50;
+	private int totalSec = 30;
 	public int sec;
 	public int lives;
 	public static UI Instance;
 	bool timeRunning;
+
+	public GameObject timeOver;
 
 	public Image timerImage;
 
 	public GameObject[] livesAssets;
 
 	void Awake () {
+		timeOver.SetActive (false);
 		Instance = this;
 		Events.OnPowerUp += OnPowerUp;
 		Events.OnGetEnergy += OnGetEnergy;
 		Events.RestartAllOver += RestartAllOver;
 		Events.StartGame += StartGame;
 		Events.OnCharacterDie += OnCharacterDie;
+		Events.OnTimeOver += OnTimeOver;
+	}
+	void OnTimeOver()
+	{
+		timeOver.SetActive (true);
 	}
 	void OnCharacterDie()
 	{
@@ -34,6 +42,7 @@ public class UI : MonoBehaviour {
 	}
 	void StartGame()
 	{
+		timeOver.SetActive (false);
 		scoreField.text = "";
 		timerField.text = "";
 
@@ -58,6 +67,10 @@ public class UI : MonoBehaviour {
 	void TimerLoop()
 	{
 		Invoke ("TimerLoop", 1);
+
+		if(Game.Instance.gameManager.state==GameManager.states.PLAYING || Game.Instance.gameManager.state==GameManager.states.DEAD )
+			sec--;
+		
 		if (Game.Instance.gameManager.state == GameManager.states.ENDING)
 			return;
 		if (lives == 0) {
@@ -73,8 +86,7 @@ public class UI : MonoBehaviour {
 
 		if (sec < 1)
 			Events.OnTimeOver ();
-		else if(Game.Instance.gameManager.state==GameManager.states.PLAYING)
-			sec--;
+		
 
 		timerImage.fillAmount = 1-((float)(totalSec-sec)/(float)totalSec);
 
@@ -111,7 +123,11 @@ public class UI : MonoBehaviour {
 
 	void OnPowerUp(bool isOn)
 	{
-		if(isOn)
-			sec += 3;
+		if (isOn) {
+			sec += 4;
+			if (sec > totalSec)
+				sec = totalSec;
+			timerImage.fillAmount = 1-((float)(totalSec-sec)/(float)totalSec);
+		}
 	}
 }
