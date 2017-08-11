@@ -101,6 +101,7 @@ public class CharacterAsset : MonoBehaviour {
 	}
 
 	void SetKinematic(){
+		anim[Data.Instance.playerData.level-1].CrossFade ("stand", 0.01f);
 		rigidBody.isKinematic = true;
 	}
 
