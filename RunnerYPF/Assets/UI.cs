@@ -9,7 +9,7 @@ public class UI : MonoBehaviour {
 	public Text timerField;
 
 	public int score;
-	private int totalSec = 30;
+	private int totalSec = 20;
 	public int sec;
 	public int lives;
 	public static UI Instance;
@@ -124,7 +124,7 @@ public class UI : MonoBehaviour {
 	void OnPowerUp(bool isOn)
 	{
 		if (isOn) {
-			sec += 4;
+			sec += 3;
 			if (sec > totalSec)
 				sec = totalSec;
 			timerImage.fillAmount = 1-((float)(totalSec-sec)/(float)totalSec);

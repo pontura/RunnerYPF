@@ -15,14 +15,27 @@ public class GroundTilesLine : MonoBehaviour {
 
 	private int totalTiles = 8;
 
-	void Start () {
-		state = states.STARTING;
-		Events.PoolAllObjects += PoolAllObjects;
+	void Start () {	
+
 		if (transform == null)
 			return;
+
+		state = states.STARTING;
+
+		Events.PoolAllObjects += PoolAllObjects;
 		AddTiles (Data.Instance.settings.GetLevelSettings(Data.Instance.playerData.level));
 	}
+	void ResetTiles()
+	{
+		if (tiles != null) {
+			foreach (Tile t in tiles)
+				t.Poolme ();
+			tiles.Clear ();
+			tiles = null;
+		}
+	}
 	void OnDestroy () {
+		ResetTiles ();
 		Events.PoolAllObjects -= PoolAllObjects;
 	}
 
@@ -71,7 +84,7 @@ public class GroundTilesLine : MonoBehaviour {
 	{
 		foreach (Tile tile in tiles)
 			tile.AnimateOut ();
-		tiles.Clear ();
+		tiles.Clear();
 	}
 	void OnTriggerEnter(Collider other)
 	{				
@@ -88,7 +101,7 @@ public class GroundTilesLine : MonoBehaviour {
 	}
 	void Reset()
 	{
-		tiles.Clear ();
+		ResetTiles ();
 		Destroy (gameObject);
 	}
 }

@@ -79,6 +79,7 @@ public class Cutscenes : MonoBehaviour {
 		paralaxs.SetActive (true);
 		grids.SetActive (true);
 		pivot.SetActive (true);
+		print ("________RestartAllOver " + newGame);
 		Events.RestartAllOver (newGame);
 		show = false;
 	}

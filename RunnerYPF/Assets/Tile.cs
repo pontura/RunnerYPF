@@ -135,7 +135,9 @@ public class Tile : SceneObject {
 		SceneObject so = null;
 		int tileID = (int)transform.position.x;
 		so = Data.Instance.pool.AddObjectTo ("GenericObject", container);
-		so.GetComponent<GenericObject> ().Init (Data.Instance.playerData.level, tileID, (int)transform.position.z);
+
+		//if(so != null)
+			so.GetComponent<GenericObject> ().Init (Data.Instance.playerData.level, tileID, (int)transform.position.z);
 	}
 	void Colorize(Settings.LevelSettings levelSettings)
 	{

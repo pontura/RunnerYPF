@@ -6,13 +6,13 @@ using UnityEngine.Video;
 public class CutsceneEvents : MonoBehaviour {
 
 	public bool newGameOnEnd;
+	public bool loseCutscene;
 	AudioSource source;
 	VideoPlayer vplayer;
 	
 	void Start(){
 		
 	}
-
 	void OnEnable(){
 		vplayer = GetComponent<VideoPlayer> ();
 		source = GetComponent<AudioSource> ();
@@ -20,11 +20,18 @@ public class CutsceneEvents : MonoBehaviour {
 			vplayer.loopPointReached += EndReached;
 			vplayer.Play ();
 		}
+		if (loseCutscene)
+			Invoke ("OnCutsceneDead", 6);
 		//source.Play ();
 	}
 
 	public void OnCutsceneComplete(int newGame){
-		Events.OnCutsceneComplete (newGame==1);
+		//print ("__________OnCutsceneComplete " + newGame);
+		//Events.OnCutsceneComplete (newGame==1);
+	}
+	public void OnCutsceneDead(){
+		print ("________________OnCutsceneDead");
+		Events.OnCutsceneComplete (true);
 	}
 
 	public void OnCutsceneLastScene(){
@@ -33,6 +40,9 @@ public class CutsceneEvents : MonoBehaviour {
 
 	void EndReached(UnityEngine.Video.VideoPlayer vp)
 	{
+		vplayer.loopPointReached -= EndReached;
+		vplayer.Stop ();
+		print ("____EndReached");
 		Events.OnCutsceneFinal ();
 		Invoke ("CutsceneClose", 3f);
 	}

@@ -6,14 +6,14 @@ public class ShowOnCollide : MonoBehaviour {
 
 	public GameObject[] assets;
 
-	bool hide;
+	bool _hide;
 
 	void OnEnable(){
 		Invoke ("TestShow", 1.0f);
 	}
 
 	void TestShow(){
-		if (!hide) {
+		if (!_hide) {
 			foreach (GameObject go in assets)
 				go.SetActive (true);
 		}
@@ -24,7 +24,7 @@ public class ShowOnCollide : MonoBehaviour {
 			print ("destroy on collission");
 			//Destroy (gameObject);
 			//gameObject.SetActive(false);
-			hide = true;
+			_hide = true;
 		}
 	}
 }
