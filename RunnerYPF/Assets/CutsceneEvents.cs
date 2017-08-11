@@ -6,6 +6,7 @@ using UnityEngine.Video;
 public class CutsceneEvents : MonoBehaviour {
 
 	public bool newGameOnEnd;
+	AudioSource source;
 	VideoPlayer vplayer;
 	
 	void Start(){
@@ -15,7 +16,9 @@ public class CutsceneEvents : MonoBehaviour {
 	void OnEnable(){
 		vplayer = GetComponent<VideoPlayer> ();
 		vplayer.loopPointReached += EndReached;
+		source = GetComponent<AudioSource> ();
 		vplayer.Play ();
+		//source.Play ();
 	}
 
 	public void OnCutsceneComplete(int newGame){

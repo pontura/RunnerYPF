@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class Mission : MonoBehaviour {
 
@@ -9,9 +10,17 @@ public class Mission : MonoBehaviour {
 	public GameObject[] levelSign;
 	public string[] levelTitle;
 	public string[] levelMission;
+	public VideoClip[] levelClip;
 
 	public Text titleText;
 	public Text missionText;
+
+	VideoPlayer vplayer;
+
+	void Awake(){
+		vplayer = GetComponent<VideoPlayer> ();
+		vplayer.loopPointReached += EndReached;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +32,7 @@ public class Mission : MonoBehaviour {
 		Events.StartGame += Ready;
 	}
 
-	void OnEnable(){		
+	void OnEnable(){				
 		Ready ();
 	}
 
@@ -42,8 +51,19 @@ public class Mission : MonoBehaviour {
 		gameObject.SetActive (true);
 		//titleText.text = levelTitle [Data.Instance.playerData.level - 1];	
 		//missionText.text = levelMission [Data.Instance.playerData.level - 1];
-		levelSign[Data.Instance.playerData.level - 1].SetActive(true);
-		Invoke ("Hide",11f);	
+
+		//levelSign[Data.Instance.playerData.level - 1].SetActive(true);
+		//Invoke ("Hide",11f);	
+
+		vplayer.clip = levelClip [Data.Instance.playerData.level - 1];
+		vplayer.Play ();
+	}
+
+	void EndReached(UnityEngine.Video.VideoPlayer vp)
+	{
+		gameObject.SetActive (false);
+		ui.SetActive (true);
+		Events.LevelStart ();
 	}
 
 	void Hide(){
