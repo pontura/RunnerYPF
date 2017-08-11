@@ -15,9 +15,11 @@ public class CutsceneEvents : MonoBehaviour {
 
 	void OnEnable(){
 		vplayer = GetComponent<VideoPlayer> ();
-		vplayer.loopPointReached += EndReached;
 		source = GetComponent<AudioSource> ();
-		vplayer.Play ();
+		if (vplayer != null) {
+			vplayer.loopPointReached += EndReached;
+			vplayer.Play ();
+		}
 		//source.Play ();
 	}
 
