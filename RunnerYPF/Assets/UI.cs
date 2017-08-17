@@ -68,7 +68,7 @@ public class UI : MonoBehaviour {
 	{
 		Invoke ("TimerLoop", 1);
 
-		if(Game.Instance.gameManager.state==GameManager.states.PLAYING || Game.Instance.gameManager.state==GameManager.states.DEAD )
+		if(Game.Instance.gameManager.state==GameManager.states.PLAYING)
 			sec--;
 		
 		if (Game.Instance.gameManager.state == GameManager.states.ENDING)
