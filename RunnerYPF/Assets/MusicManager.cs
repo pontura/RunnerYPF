@@ -42,6 +42,7 @@ public class MusicManager : MonoBehaviour {
 	void RestartAllOver(bool newGame){
 		if (newGame) {
 			music.clip = splash;
+			music.volume = 0.8f;
 			music.Play ();
 		}else
 			StartGame ();
@@ -49,6 +50,7 @@ public class MusicManager : MonoBehaviour {
 
 	void StartGame(){
 		music.clip = ingame;
+		music.volume = 0.4f;
 		music.Play ();
 	}
 

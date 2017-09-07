@@ -11,15 +11,19 @@ public class Mission : MonoBehaviour {
 	public string[] levelTitle;
 	public string[] levelMission;
 	public VideoClip[] levelClip;
+	public VideoClip[] levelClipOut;
 
 	public Text titleText;
 	public Text missionText;
 
-	VideoPlayer vplayer;
+	VideoPlayer[] vplayer;
+
+	bool next;
 
 	void Awake(){
-		vplayer = GetComponent<VideoPlayer> ();
-		vplayer.loopPointReached += EndReached;
+		vplayer = GetComponents<VideoPlayer> ();
+		foreach(VideoPlayer vp in vplayer)
+		vp.loopPointReached += EndReached;
 	}
 
 	// Use this for initialization
@@ -55,8 +59,13 @@ public class Mission : MonoBehaviour {
 		//levelSign[Data.Instance.playerData.level - 1].SetActive(true);
 		//Invoke ("Hide",11f);	
 
-		vplayer.clip = levelClip [Data.Instance.playerData.level - 1];
-		vplayer.Play ();
+		vplayer[0].clip = levelClip [Data.Instance.playerData.level - 1];
+		vplayer[0].Play ();
+		Invoke ("SetNext", 5);
+	}
+
+	void SetNext(){
+		next = true;
 	}
 
 	void EndReached(UnityEngine.Video.VideoPlayer vp)
@@ -75,6 +84,18 @@ public class Mission : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (next) {
+			if (Input.anyKey) {
+				vplayer[0].Pause ();
+				vplayer[1].clip = levelClipOut [Data.Instance.playerData.level - 1];
+				vplayer[1].Play ();
+				next = false;
+				Invoke ("Video1Stop", 0.2f);
+			}
+		}
+	}
+
+	void Video1Stop(){
+		vplayer[0].Stop ();
 	}
 }
